@@ -1,0 +1,17 @@
+/* Pre-flight cache — 2026-10-07. Say "refresh pre-flight" to re-scan. */
+{
+	"font_stack": "system sans (no webfont in source app)",
+	"palette": {
+		"paper": "#09090b",
+		"surface": "#18181b",
+		"raised": "#27272a",
+		"ink": "#fafafa",
+		"muted": "#a1a1aa",
+		"dim": "#8f8f99",
+		"accent": "#ff6dd6",
+		"accent_ink": "#000000"
+	},
+	"motion": "cut (no animation library)",
+	"spacing": "Tailwind v4 4pt scale",
+	"framework": "Astro 7.3 + @tailwindcss/vite + lucide-astro"
+}

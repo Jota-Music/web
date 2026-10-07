@@ -1,0 +1,130 @@
+---
+import { ArrowRight, Github, Radio } from "lucide-astro";
+
+const shots = [
+	{
+		src: "/img/screenshot-search.png",
+		alt: "Search across Spotify and YouTube",
+		label: "Search",
+		title: "One search bar, two sources.",
+		body: "Type a song, an artist or paste a link — results from Spotify and YouTube land in the same list, ready to play from the same queue.",
+	},
+	{
+		src: "/img/screenshot-rooms.png",
+		alt: "Rooms — sync queue and play/pause across devices",
+		label: "Rooms",
+		title: "Listen together, over your own relay.",
+		body: "Save a room, see who is listening, and sync queue, play/pause, position, shuffle and repeat across devices — through a WebSocket relay you host yourself.",
+	},
+];
+---
+
+<section id="tour" class="scroll-mt-28 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">In use</p>
+		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight [overflow-wrap:anywhere] sm:text-4xl">
+			Open it, search, press play.
+		</h2>
+
+		<div class="mt-10 flex flex-col gap-14">
+			{
+				shots.map((shot) => (
+					<figure class="min-w-0" data-reveal>
+						<figcaption class="flex flex-col gap-2 border-b border-zinc-800 pb-4 sm:flex-row sm:items-end sm:justify-between">
+							<div class="min-w-0">
+								<p class="text-xs font-medium tracking-[0.18em] text-accent uppercase">
+									{shot.label}
+								</p>
+								<h3 class="mt-2 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+									{shot.title}
+								</h3>
+							</div>
+							<p class="max-w-md text-sm leading-relaxed text-balance text-muted sm:text-right">
+								{shot.body}
+							</p>
+						</figcaption>
+						<img
+							src={shot.src}
+							alt={shot.alt}
+							width="1119"
+							height="1011"
+							loading="lazy"
+							class="mt-5 w-full rounded-xl border border-zinc-800 bg-paper"
+						/>
+					</figure>
+				))
+			}
+		</div>
+
+		<div
+			class="mt-8 flex flex-col gap-4 rounded-xl border border-zinc-800 bg-surface/50 p-5 sm:flex-row sm:items-center sm:justify-between"
+		>
+			<div class="flex min-w-0 items-start gap-3">
+				<span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
+					<Radio size={18} aria-hidden="true" />
+				</span>
+				<div class="min-w-0">
+					<h3 class="text-sm font-semibold text-ink">Rooms run on your relay</h3>
+					<p class="mt-1 text-sm leading-relaxed text-balance text-muted">
+						The sync layer is its own repo — host it wherever you want, then
+						point Jota at it.
+					</p>
+				</div>
+			</div>
+			<a
+				href="https://github.com/Jota-Music/relay"
+				rel="noreferrer"
+				class="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-paper px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-raised"
+			>
+				<Github size={15} aria-hidden="true" />
+				Jota-Music/relay
+			</a>
+		</div>
+
+		<div
+			class="sticky bottom-4 z-40 mx-auto mt-10 w-fit flex justify-center sm:bottom-6"
+		>
+			<a
+				href="#download"
+				class="inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink shadow-lg shadow-black/50 transition-transform hover:-translate-y-px"
+			>
+				Try it — download Jota
+				<ArrowRight size={16} aria-hidden="true" />
+			</a>
+		</div>
+	</div>
+</section>
+
+<script>
+	if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+		const items = document.querySelectorAll("[data-reveal]");
+		items.forEach((item) => item.classList.add("reveal"));
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-in");
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ rootMargin: "0px 0px -10% 0px" },
+		);
+		items.forEach((item) => observer.observe(item));
+	}
+</script>
+
+<style>
+	.reveal {
+		opacity: 0;
+		transform: translateY(14px);
+		transition:
+			opacity 0.5s ease,
+			transform 0.5s ease;
+	}
+
+	.reveal.is-in {
+		opacity: 1;
+		transform: none;
+	}
+</style>

@@ -1,0 +1,20 @@
+/* Hallmark · macrostructure: Workbench · theme: studied-DNA (source: jota app)
+ * genre: atmospheric · nav: N5 floating pill · footer: Ft5 statement
+ * type: system sans — inherited from the DNA source (the app ships no webfont)
+ * enrichment: real screenshots (3 captures) · knobs: hero=7/5 split · bento spans=4/2·2/4·2/4·2/4 · spec rows=4
+ * Hallmark · pre-emit critique: P4 H4 E5 S5 R4 V5
+ * contrast: pass (40–41) · honest: pass (46) · chrome: pass (47) · tokens: pass (48)
+ * responsive: pass (34, 49, 50–53, 55–56 — verified at 320/375/414/768/1024/1280) · icons: pass (30)
+ * nav: N5 · footer: Ft5 · slop: pass (42–45)
+ */
+
+@theme {
+	--color-paper: #09090b;
+	--color-surface: #18181b;
+	--color-raised: #27272a;
+	--color-ink: #fafafa;
+	--color-muted: #a1a1aa;
+	--color-dim: #8f8f99;
+	--color-accent: #ff6dd6;
+	--color-accent-ink: #000000;
+}

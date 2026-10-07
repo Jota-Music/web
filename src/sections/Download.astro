@@ -1,0 +1,89 @@
+---
+import { Apple, ArrowRight, Download, Monitor, Smartphone, Terminal } from "lucide-astro";
+
+const rows = [
+	{
+		icon: Terminal,
+		platform: "Linux",
+		artifacts: ".deb · .rpm · .AppImage · .flatpak · PKGBUILD (AUR)",
+		note: "AppImage updates in place",
+	},
+	{
+		icon: Smartphone,
+		platform: "Android",
+		artifacts: ".apk",
+		note: "Updates in place on launch",
+	},
+	{
+		icon: Monitor,
+		platform: "Windows",
+		artifacts: "NSIS .exe",
+		note: "Per-user installs in place",
+	},
+	{
+		icon: Apple,
+		platform: "macOS",
+		artifacts: "universal .dmg",
+		note: "Updates in place on launch",
+	},
+];
+---
+
+<section id="download" class="scroll-mt-28 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">Download</p>
+		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight [overflow-wrap:anywhere] sm:text-4xl">
+			Pick your platform.
+		</h2>
+		<p class="mt-4 max-w-xl text-sm leading-relaxed text-balance text-muted">
+			Pre-built binaries for every platform live on the releases page. Jota
+			checks for updates on launch and installs them in place on AppImage,
+			macOS <code class="text-zinc-300">.app</code>, Windows per-user and
+			Android.
+		</p>
+
+		<ul class="mt-8 border-t border-zinc-800">
+			{
+				rows.map(({ icon: Icon, platform, artifacts, note }) => (
+					<li
+						class="flex flex-col gap-1 border-b border-zinc-800 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+					>
+						<span class="flex items-center gap-2.5 text-sm font-semibold text-ink">
+							<Icon size={16} aria-hidden="true" class="text-accent" />
+							{platform}
+						</span>
+						<code class="min-w-0 text-sm break-words text-zinc-300 sm:text-right">
+							{artifacts}
+						</code>
+						<span class="text-xs text-dim sm:text-right">{note}</span>
+					</li>
+				))
+			}
+		</ul>
+
+		<div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
+			<a
+				href="https://github.com/Jota-Music/jota/releases"
+				rel="noreferrer"
+				class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
+			>
+				<Download size={16} aria-hidden="true" />
+				Get the latest release
+			</a>
+			<p class="text-xs leading-relaxed text-balance text-dim">
+				Windows <code class="text-zinc-400">.exe</code> and macOS <code
+					class="text-zinc-400">.dmg</code
+				> are unsigned — SmartScreen and Gatekeeper may flag them.
+			</p>
+		</div>
+
+		<p class="mt-6 text-xs text-balance text-dim">
+			Want to build it yourself? Requirements and commands are in the <a
+				href="https://github.com/Jota-Music/jota#readme"
+				rel="noreferrer"
+				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>README<ArrowRight size={12} aria-hidden="true" /></a
+			>.
+		</p>
+	</div>
+</section>

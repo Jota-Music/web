@@ -1,0 +1,181 @@
+---
+import {
+	CloudOff,
+	Disc3,
+	Headphones,
+	Languages,
+	ListMusic,
+	ListPlus,
+	Monitor,
+	Play,
+	Radio,
+	RefreshCw,
+	Shuffle,
+	ShieldCheck,
+	UserPlus,
+	Users,
+} from "lucide-astro";
+
+const also = [
+	{ icon: Monitor, label: "Cross-platform, one codebase" },
+	{ icon: RefreshCw, label: "Auto-update in place" },
+	{ icon: Languages, label: "English and Spanish" },
+	{ icon: ListPlus, label: "Custom local playlists" },
+	{ icon: UserPlus, label: "Following across sources" },
+	{ icon: CloudOff, label: "Data stays local" },
+];
+---
+
+<section id="features" class="scroll-mt-28 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">
+			Features
+		</p>
+		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight [overflow-wrap:anywhere] sm:text-4xl">
+			Everything in one player.
+		</h2>
+
+		<div class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 sm:col-span-2 lg:col-span-4"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Disc3 size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">
+					Two sources, one player
+				</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Browse Spotify and YouTube side by side and play either from the
+					same queue and search bar. Spotify is optional — the YouTube side
+					works standalone.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 lg:col-span-2"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Radio size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">Song radio</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Turn any Spotify track into a station of similar songs and play it
+					like any other playlist.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 lg:col-span-2"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<ListMusic size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">Browse Spotify</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Log in to browse playlists, albums, artists, tracks and other users'
+					public playlists — type a song, an artist or paste a link.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 lg:col-span-4"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Play size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">
+					YouTube first-class
+				</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Search videos, playlists and channels, save them to your home shelf,
+					or paste a link to jump straight in. Fix a wrong match by hand.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 lg:col-span-2"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Shuffle size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">Full player</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Play/pause, seek, volume, shuffle and repeat, plus a queue you can
+					reorder and prune. Jota picks up where you left off after a restart.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 sm:col-span-2 lg:col-span-4"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Users size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">Rooms</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Save a room, see who is listening, and sync queue, play/pause,
+					position, shuffle and repeat across devices over your own WebSocket
+					relay.
+				</p>
+			</article>
+
+			<article
+				class="min-w-0 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 sm:col-span-2 lg:col-span-2"
+			>
+				<span
+					class="flex size-9 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<Headphones size={18} aria-hidden="true" />
+				</span>
+				<h3 class="mt-4 text-sm font-semibold text-ink">
+					Native media controls
+				</h3>
+				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
+					Media keys, lock-screen and notification controls on desktop and
+					mobile.
+				</p>
+			</article>
+
+			<article
+				class="flex min-w-0 flex-col gap-4 rounded-xl border border-zinc-800 bg-surface/50 p-5 transition-colors hover:border-zinc-700 sm:col-span-2 sm:flex-row sm:items-center lg:col-span-4"
+			>
+				<span
+					class="flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent"
+				>
+					<ShieldCheck size={18} aria-hidden="true" />
+				</span>
+				<div class="min-w-0">
+					<h3 class="text-sm font-semibold text-ink">Private by default</h3>
+					<p class="mt-1 text-sm leading-relaxed text-balance text-muted">
+						Data stays local. No accounts, no telemetry, no third-party servers
+						— save the app log from settings when reporting a bug.
+					</p>
+				</div>
+			</article>
+		</div>
+
+		<ul class="mt-6 flex flex-wrap gap-2">
+			{
+				also.map(({ icon: Icon, label }) => (
+					<li class="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-surface/50 px-3 py-1.5 text-xs text-zinc-300">
+						<Icon size={13} aria-hidden="true" class="text-dim" />
+						{label}
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>

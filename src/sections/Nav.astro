@@ -1,0 +1,54 @@
+---
+import { Download, Github } from "lucide-astro";
+
+const links = [
+	{ href: "#features", label: "Features" },
+	{ href: "#tour", label: "In use" },
+	{ href: "#download", label: "Download" },
+];
+---
+
+<header class="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+	<nav
+		class="flex w-full max-w-[44rem] items-center gap-1 rounded-full border border-white/10 bg-paper/70 py-1.5 pr-1.5 pl-1.5 shadow-lg shadow-black/40 backdrop-blur-md"
+	>
+		<a
+			href="#top"
+			class="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-ink"
+		>
+			<img src="/apple-touch-icon.png" alt="" width="20" height="20" class="rounded-md" />
+			Jota
+		</a>
+		<ul class="ml-auto hidden items-center sm:flex">
+			{
+				links.map((link) => (
+					<li>
+						<a
+							href={link.href}
+							class="rounded-full px-3 py-2 text-sm text-muted transition-colors hover:text-ink"
+						>
+							{link.label}
+						</a>
+					</li>
+				))
+			}
+			<li>
+				<a
+					href="https://github.com/Jota-Music/jota"
+					rel="noreferrer"
+					class="flex items-center gap-1.5 rounded-full px-3 py-2 text-sm text-muted transition-colors hover:text-ink"
+				>
+					<Github size={15} aria-hidden="true" />
+					GitHub
+				</a>
+			</li>
+		</ul>
+		<a
+			href="#download"
+			class="ml-auto inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px sm:ml-2"
+		>
+			<Download size={15} aria-hidden="true" />
+			Download
+		</a>
+	</nav>
+</header>

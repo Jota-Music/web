@@ -1,0 +1,75 @@
+---
+import { Github } from "lucide-astro";
+
+const links = [
+	{ href: "https://github.com/Jota-Music/jota", label: "GitHub" },
+	{ href: "https://github.com/Jota-Music/jota/releases", label: "Releases" },
+	{ href: "https://github.com/Jota-Music/relay", label: "Relay" },
+	{
+		href: "https://github.com/Jota-Music/jota/wiki/Cloudflare-WARP",
+		label: "WARP guide",
+	},
+];
+---
+
+<footer class="border-t border-zinc-800 pt-16 pb-12 md:pt-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="max-w-[16ch] text-4xl font-bold tracking-tight text-balance [overflow-wrap:anywhere] sm:text-5xl lg:text-6xl">
+			No cloud. No tracking. No subscriptions.
+		</p>
+
+		<div
+			class="mt-12 flex flex-col gap-6 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between"
+		>
+			<a href="#top" class="flex items-center gap-2 text-sm font-semibold text-ink">
+				<img src="/apple-touch-icon.png" alt="" width="20" height="20" class="rounded-md" />
+				Jota
+			</a>
+			<ul class="flex flex-wrap items-center gap-x-5 gap-y-2">
+				{
+					links.map((link) => (
+						<li>
+							<a
+								href={link.href}
+								rel="noreferrer"
+								class="text-sm text-muted transition-colors hover:text-ink"
+							>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+				<li>
+					<a
+						href="https://github.com/Jota-Music/jota"
+						rel="noreferrer"
+						aria-label="Jota on GitHub"
+						class="flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
+					>
+						<Github size={15} aria-hidden="true" />
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<p class="mt-6 max-w-3xl text-xs leading-relaxed text-balance text-dim">
+			Jota is an independent, unofficial client. Not affiliated with, endorsed
+			or sponsored by Spotify AB, Google LLC or any music label. Playback is
+			fetched at runtime from your own session; streamed audio belongs to its
+			rights holders.
+		</p>
+		<p class="mt-3 text-xs text-balance text-dim">
+			Developed by <a
+				href="https://github.com/salvadorsru"
+				rel="noreferrer"
+				class="text-zinc-400 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>salvadorsru</a
+			> · <a
+				href="https://github.com/Jota-Music/jota/blob/main/LICENSE"
+				rel="noreferrer"
+				class="text-zinc-400 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>GPL-3.0</a
+			> · © 2026
+		</p>
+	</div>
+</footer>
