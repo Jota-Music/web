@@ -1,0 +1,46 @@
+name: Deploy to Cloudflare Pages
+
+on:
+	push:
+		branches: [master]
+	workflow_dispatch:
+
+permissions:
+	contents: read
+	pages: write
+	id-token: write
+
+jobs:
+	build:
+		runs-on: ubuntu-latest
+		steps:
+			- uses: actions/checkout@v4
+			- uses: oven-sh/setup-bun@v2
+				with:
+					bun-version: latest
+			- name: Install deps
+				run: bun install
+			- name: Build
+				run: bun run build
+				env:
+					# Set your domain in astro.config.mjs `site` for absolute og:image
+					# SITE_URL: https://jota.music
+			- name: Upload artifact
+				uses: actions/upload-pages-artifact@v3
+				with:
+					path: ./dist
+
+	deploy:
+		needs: build
+		runs-on: ubuntu-latest
+		steps:
+			- id: deploy
+				uses: cloudflare/pages-action@v1
+				with:
+					apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+					accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+					projectName: jota-web
+					directory: ./dist
+					gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+					branch: master
+					wranglerVersion: "3"
