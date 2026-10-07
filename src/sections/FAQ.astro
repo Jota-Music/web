@@ -1,0 +1,67 @@
+---
+import { HelpCircle, ArrowRight } from "lucide-astro";
+
+const faqs = [
+	{
+		q: "Does Jota work without Spotify?",
+		a: "Yes. Spotify is optional — the YouTube side works standalone. You can browse YouTube, create playlists, and listen without any Spotify account.",
+	},
+	{
+		q: "Is my data sent to any servers?",
+		a: "No. Data stays local. No accounts, no telemetry, no third-party servers. Playback is fetched at runtime from your own session.",
+	},
+	{
+		q: "Why does Windows / macOS warn me about the download?",
+		a: "The Windows .exe and macOS .dmg are unsigned, so SmartScreen and Gatekeeper may flag them. This is a known limitation of hobby-project releases.",
+	},
+	{
+		q: "How do updates work?",
+		a: "On AppImage, macOS .app, Windows per-user and Android, Jota checks GitHub releases on launch and installs itself in place with SHA256SUMS verification. Other channels fall back to the releases page.",
+	},
+	{
+		q: "What are Rooms?",
+		a: "Rooms sync queue, play/pause, position, shuffle and repeat across devices over your own WebSocket relay. See who's listening in real time. You run the relay yourself via Jota-Music/relay.",
+	},
+	{
+		q: "Is Jota official?",
+		a: "No. Jota is an independent, unofficial client. Not affiliated with, endorsed or sponsored by Spotify AB, Google LLC or any music label.",
+	},
+];
+---
+
+<section id="faq" class="scroll-mt-28 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">FAQ</p>
+		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight wrap-anywhere sm:text-4xl">
+			Common questions.
+		</h2>
+
+		<dl class="mt-10 space-y-6" aria-label="Frequently asked questions">
+			{
+				faqs.map(({ q, a }) => (
+					<div class="border-t border-zinc-800 pt-6 first:border-0">
+						<dt class="text-sm font-semibold text-ink flex items-center gap-2">
+							<HelpCircle size={16} aria-hidden="true" class="text-accent shrink-0" />
+							{q}
+						</dt>
+						<dd class="mt-2 text-sm leading-relaxed text-balance text-muted">{a}</dd>
+					</div>
+				))
+			}
+		</dl>
+
+		<p class="mt-8 text-xs text-dim">
+			More in the <a
+				href="https://github.com/Jota-Music/jota/wiki"
+				rel="noreferrer"
+				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>wiki<ArrowRight size={12} aria-hidden="true" /></a
+			> or open an <a
+				href="https://github.com/Jota-Music/jota/issues"
+				rel="noreferrer"
+				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>issue<ArrowRight size={12} aria-hidden="true" /></a
+			>.
+		</p>
+	</div>
+</section>
