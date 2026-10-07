@@ -1,0 +1,59 @@
+---
+import { HelpCircle, Github, ArrowRight } from "lucide-astro";
+
+const faqs = [
+	{
+		q: "Does Jota need Spotify Premium?",
+		a: "Yes, for the Spotify side. YouTube works without any account. You can use Jota with YouTube only if you prefer.",
+	},
+	{
+		q: "Will it work on Android Auto / CarPlay?",
+		a: "Not yet — native media controls work on the phone, but there is no Android Auto or CarPlay integration at the moment.",
+	},
+	{
+		q: "Can I run it in Docker?",
+		a: "There's no official Docker image. The relay (`Jota-Music/relay`) has a Dockerfile; the app itself runs natively on desktop and Android.",
+	},
+	{
+		q: "How do I back up my data?",
+		a: "Your library, playlists and settings live in the app data directory (per-platform standard). Copy that folder — everything is local, no cloud to sync from.",
+	},
+];
+---
+
+<section id="faq" class="scroll-mt-28 py-16 md:py-24">
+	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">FAQ</p>
+		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight wrap-anywhere sm:text-4xl">
+			Common questions.
+		</h2>
+
+		<dl class="mt-10 space-y-6" aria-label="Frequently asked questions">
+			{
+				faqs.map(({ q, a }) => (
+					<div class="border-t border-zinc-800 pt-6 first:border-0">
+						<dt class="text-sm font-semibold text-ink flex items-center gap-2">
+							<HelpCircle size={16} aria-hidden="true" class="text-accent shrink-0" />
+							{q}
+						</dt>
+						<dd class="mt-2 text-sm leading-relaxed text-balance text-muted">{a}</dd>
+					</div>
+				))
+			}
+		</dl>
+
+		<p class="mt-8 text-xs text-dim">
+			More in the <a
+				href="https://github.com/Jota-Music/jota/wiki"
+				rel="noreferrer"
+				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>wiki<ArrowRight size={12} aria-hidden="true" /></a
+			> or open an <a
+				href="https://github.com/Jota-Music/jota/issues"
+				rel="noreferrer"
+				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>issue<ArrowRight size={12} aria-hidden="true" /></a
+			>.
+		</p>
+	</div>
+</section>

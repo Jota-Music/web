@@ -7,6 +7,11 @@ const promises = [
 	{ icon: CreditCard, label: "No subscriptions" },
 	{ icon: Code, label: "Open source" },
 ];
+
+const version = await fetch("https://api.github.com/repos/Jota-Music/jota/releases/latest")
+	.then((r) => r.ok && r.json())
+	.then((d) => d?.tag_name?.replace(/^v/, "") ?? "latest")
+	.catch(() => "latest");
 ---
 
 <section id="top" class="relative scroll-mt-28">
@@ -43,11 +48,12 @@ const promises = [
 			</ul>
 			<div class="mt-8 flex flex-wrap items-center gap-3">
 				<a
-					href="#download"
+					href="https://github.com/Jota-Music/jota/releases/latest"
+					rel="noreferrer"
 					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 				>
 					<Download size={16} aria-hidden="true" />
-					Download Jota
+					Download Jota {version}
 				</a>
 				<a
 					href="https://github.com/Jota-Music/jota"
