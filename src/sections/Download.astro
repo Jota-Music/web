@@ -1,29 +1,37 @@
 ---
 import { Apple, ArrowRight, Download, Monitor, Smartphone, Terminal } from "lucide-astro";
 
+const base = "https://github.com/Jota-Music/jota/releases/latest/download";
+
 const rows = [
 	{
 		icon: Terminal,
 		platform: "Linux",
-		artifacts: ".deb · .rpm · .AppImage · .flatpak · PKGBUILD (AUR)",
+		artifacts: [
+			{ label: ".deb", file: "jota.deb" },
+			{ label: ".rpm", file: "jota.rpm" },
+			{ label: ".AppImage", file: "jota-x86_64.AppImage" },
+			{ label: ".flatpak", file: "jota.flatpak" },
+			{ label: "Arch", file: "jota.pkg.tar.zst" },
+		],
 		note: "AppImage updates in place",
 	},
 	{
 		icon: Smartphone,
 		platform: "Android",
-		artifacts: ".apk",
+		artifacts: [{ label: ".apk", file: "jota.apk" }],
 		note: "Updates in place on launch",
 	},
 	{
 		icon: Monitor,
 		platform: "Windows",
-		artifacts: "NSIS .exe",
+		artifacts: [{ label: "installer .exe", file: "jota-amd64-installer.exe" }],
 		note: "Per-user installs in place",
 	},
 	{
 		icon: Apple,
 		platform: "macOS",
-		artifacts: "universal .dmg",
+		artifacts: [{ label: "universal .dmg", file: "jota.dmg" }],
 		note: "Updates in place on launch",
 	},
 ];
@@ -36,53 +44,53 @@ const rows = [
 			Pick your platform.
 		</h2>
 		<p class="mt-4 max-w-xl text-sm leading-relaxed text-balance text-muted">
-			Pre-built binaries for every platform live on the releases page. Jota
-			checks for updates on launch and installs them in place on AppImage,
-			macOS <code class="text-zinc-300">.app</code>, Windows per-user and
-			Android.
+			Grab a build straight from here — no signup, no detours. Jota checks
+			for updates on launch and installs them in place on AppImage, macOS
+			<code class="text-zinc-300">.app</code>, Windows per-user and Android.
 		</p>
 
 		<ul class="mt-8 border-t border-zinc-800">
 			{
 				rows.map(({ icon: Icon, platform, artifacts, note }) => (
-					<li
-						class="flex flex-col gap-1 border-b border-zinc-800 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
-					>
+					<li class="grid gap-x-4 gap-y-2 border-b border-zinc-800 py-4 sm:grid-cols-[max-content_1fr_max-content] sm:items-center">
 						<span class="flex items-center gap-2.5 text-sm font-semibold text-ink">
 							<Icon size={16} aria-hidden="true" class="text-accent" />
 							{platform}
 						</span>
-						<code class="min-w-0 text-sm wrap-break-word text-zinc-300 sm:text-right">
-							{artifacts}
-						</code>
+						<ul class="flex min-w-0 flex-wrap items-center gap-2">
+							{
+								artifacts.map(({ label, file }) => (
+									<li>
+										<a
+											href={`${base}/${file}`}
+											class="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 transition-colors hover:border-accent hover:text-ink"
+										>
+											<Download size={13} aria-hidden="true" />
+											{label}
+										</a>
+									</li>
+								))
+							}
+						</ul>
 						<span class="text-xs text-dim sm:text-right">{note}</span>
 					</li>
 				))
 			}
 		</ul>
 
-		<div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
-			<a
+		<p class="mt-6 text-xs leading-relaxed text-balance text-dim">
+			Windows <code class="text-zinc-400">.exe</code> and macOS <code
+				class="text-zinc-400">.dmg</code
+			> are unsigned — SmartScreen and Gatekeeper may flag them. Checksums are
+			in <a
+				href={`${base}/SHA256SUMS`}
+				class="text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				>SHA256SUMS</a
+			>, and every past version lives on the <a
 				href="https://github.com/Jota-Music/jota/releases"
 				rel="noreferrer"
-				class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
-			>
-				<Download size={16} aria-hidden="true" />
-				Get the latest release
-			</a>
-			<p class="text-xs leading-relaxed text-balance text-dim">
-				Windows <code class="text-zinc-400">.exe</code> and macOS <code
-					class="text-zinc-400">.dmg</code
-				> are unsigned — SmartScreen and Gatekeeper may flag them.
-			</p>
-		</div>
-
-		<p class="mt-6 text-xs text-balance text-dim">
-			Want to build it yourself? Requirements and commands are in the <a
-				href="https://github.com/Jota-Music/jota#readme"
-				rel="noreferrer"
 				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
-				>README<ArrowRight size={12} aria-hidden="true" /></a
+				>releases page<ArrowRight size={12} aria-hidden="true" /></a
 			>.
 		</p>
 	</div>
