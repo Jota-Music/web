@@ -56,25 +56,52 @@ const shots = [
 			}
 		</div>
 
-		<div
-			class="mt-8 flex flex-col gap-4 rounded-xl border border-zinc-800 bg-surface/50 p-5 sm:flex-row sm:items-center sm:justify-between"
-		>
+		<div class="mt-8 rounded-xl border border-zinc-800 bg-surface/50 p-5 sm:p-6">
 			<div class="flex min-w-0 items-start gap-3">
 				<span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
 					<Radio size={18} aria-hidden="true" />
 				</span>
 				<div class="min-w-0">
 					<h3 class="text-sm font-semibold text-ink">Rooms run on your relay</h3>
-					<p class="mt-1 text-sm leading-relaxed text-balance text-muted">
-						The sync layer is its own repo — host it wherever you want, then
-						point Jota at it.
+					<p class="mt-1 max-w-2xl text-sm leading-relaxed text-balance text-muted">
+						Syncing is the only part of Jota that talks to a server — and that
+						server is yours. The relay lives in its own repo: one Go binary or
+						the published Docker image, then point Jota at your own
+						<code class="text-zinc-300">wss://</code> URL.
 					</p>
 				</div>
 			</div>
+
+			<dl class="mt-5 grid gap-5 border-t border-zinc-800 pt-5 sm:grid-cols-3">
+				<div class="min-w-0">
+					<dt class="text-sm font-semibold text-ink">Join by code</dt>
+					<dd class="mt-1 text-sm leading-relaxed text-muted">
+						The host shares a short room code and anyone holding it joins.
+						Set a room password too if the code gets passed around.
+					</dd>
+				</div>
+				<div class="min-w-0">
+					<dt class="text-sm font-semibold text-ink">Late joiners catch up</dt>
+					<dd class="mt-1 text-sm leading-relaxed text-muted">
+						The relay caches the last playback state and syncs clocks, so a
+						reconnect or a new device lands on the same beat instead of
+						starting cold.
+					</dd>
+				</div>
+				<div class="min-w-0">
+					<dt class="text-sm font-semibold text-ink">Tune it or lock it</dt>
+					<dd class="mt-1 text-sm leading-relaxed text-muted">
+						Environment variables for the guest cap, room lifetime and play
+						lead. <code class="text-zinc-300">AUTH_TOKEN</code> keeps the socket
+						private; put Caddy or nginx in front for TLS.
+					</dd>
+				</div>
+			</dl>
+
 			<a
 				href="https://github.com/Jota-Music/relay"
 				rel="noreferrer"
-				class="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-white/10 bg-paper px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-raised"
+				class="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/10 bg-paper px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-raised"
 			>
 				<Github size={15} aria-hidden="true" />
 				Jota-Music/relay
