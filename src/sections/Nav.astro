@@ -1,12 +1,17 @@
 ---
 import { Download, Github } from "lucide-astro";
 import type { Landing } from "@/i18n/landing/schema";
+import { locales, path, defaultLocale, type Locale } from "@/i18n";
 
 interface Props {
 	t: Landing;
 }
 
 const { t } = Astro.props;
+
+const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+
+const codes: Record<Locale, string> = { en: "EN", es: "ES" };
 
 const links = [
 	{ href: "#features", label: t.nav.features },
@@ -47,6 +52,28 @@ const links = [
 					<Github size={15} aria-hidden="true" />
 					{t.nav.github}
 				</a>
+			</li>
+			<li role="group" aria-label={t.nav.language} class="flex items-center gap-0.5 pl-1">
+				{
+					locales.map((code) =>
+						code === locale ? (
+							<span
+								aria-current="true"
+								class="rounded-full bg-white/10 px-2 py-1 text-xs font-semibold text-ink"
+							>
+								{codes[code]}
+							</span>
+						) : (
+							<a
+								href={path(code)}
+								hreflang={code}
+								class="rounded-full px-2 py-1 text-xs text-muted transition-colors hover:text-ink"
+							>
+								{codes[code]}
+							</a>
+						),
+					)
+				}
 			</li>
 		</ul>
 		<a

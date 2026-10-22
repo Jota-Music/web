@@ -48,8 +48,16 @@ web/
 │       ├── screenshot-rooms.png
 │       └── screenshot-search.png
 ├── src/
+│   ├── i18n/
+│   │   ├── index.ts            # locale detection + t()
+│   │   ├── Phrase.astro        # <Phrase id> component
+│   │   └── landing/
+│   │       ├── en.ts               # English copy
+│   │       ├── es.ts               # Spanish copy
+│   │       └── schema.ts           # shared phrase contract
 │   ├── layouts/
-│   │   └── Layout.astro        # root HTML, meta, fonts
+│   │   ├── Layout.astro        # root HTML, meta, fonts
+│   │   └── Landing.astro       # landing shell (nav, sections, footer)
 │   ├── pages/
 │   │   └── index.astro         # single-page landing
 │   ├── sections/
