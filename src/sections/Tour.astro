@@ -1,29 +1,29 @@
 ---
 import { ArrowRight, Github, Radio } from "lucide-astro";
+import Phrase from "@/i18n/Phrase.astro";
+import type { Landing } from "@/i18n/landing/schema";
 
-const shots = [
-	{
-		src: "/img/screenshot-search.png",
-		alt: "Search across Spotify and YouTube",
-		label: "Search",
-		title: "One search bar, two sources.",
-		body: "Type a song, an artist or paste a link — results from Spotify and YouTube land in the same list, ready to play from the same queue.",
-	},
-	{
-		src: "/img/screenshot-rooms.png",
-		alt: "Rooms — sync queue and play/pause across devices",
-		label: "Rooms",
-		title: "Listen together, over your own relay.",
-		body: "Save a room, see who is listening, and sync queue, play/pause, position, shuffle and repeat across devices — through a WebSocket relay you host yourself.",
-	},
-];
+interface Props {
+	t: Landing;
+}
+
+const { t } = Astro.props;
+
+const shots = (
+	[
+		{ src: "/img/screenshot-search.png", key: "search" },
+		{ src: "/img/screenshot-rooms.png", key: "rooms" },
+	] as const
+).map((shot) => ({ ...shot, ...t.tour.shots[shot.key] }));
+
+const points = ["code", "catchup", "tune"] as const;
 ---
 
 <section id="tour" class="scroll-mt-28 py-16 md:py-24">
 	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
-		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">In use</p>
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">{t.tour.eyebrow}</p>
 		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight [overflow-wrap:anywhere] sm:text-4xl">
-			Open it, search, press play.
+			{t.tour.title}
 		</h2>
 
 		<div class="mt-10 flex flex-col gap-14">
@@ -62,41 +62,24 @@ const shots = [
 					<Radio size={18} aria-hidden="true" />
 				</span>
 				<div class="min-w-0">
-					<h3 class="text-sm font-semibold text-ink">Rooms run on your relay</h3>
+					<h3 class="text-sm font-semibold text-ink">{t.tour.relay.title}</h3>
 					<p class="mt-1 max-w-2xl text-sm leading-relaxed text-balance text-muted">
-						Syncing is the only part of Jota that talks to a server — and that
-						server is yours. The relay lives in its own repo: one Go binary or
-						the published Docker image, then point Jota at your own <code
-							class="text-zinc-300">wss://</code
-						> URL.
+						<Phrase value={t.tour.relay.body} />
 					</p>
 				</div>
 			</div>
 
 			<dl class="mt-5 grid gap-5 border-t border-zinc-800 pt-5 sm:grid-cols-3">
-				<div class="min-w-0">
-					<dt class="text-sm font-semibold text-ink">Join by code</dt>
-					<dd class="mt-1 text-sm leading-relaxed text-muted">
-						The host shares a short room code and anyone holding it joins.
-						Set a room password too if the code gets passed around.
-					</dd>
-				</div>
-				<div class="min-w-0">
-					<dt class="text-sm font-semibold text-ink">Late joiners catch up</dt>
-					<dd class="mt-1 text-sm leading-relaxed text-muted">
-						The relay caches the last playback state and syncs clocks, so a
-						reconnect or a new device lands on the same beat instead of
-						starting cold.
-					</dd>
-				</div>
-				<div class="min-w-0">
-					<dt class="text-sm font-semibold text-ink">Tune it or lock it</dt>
-					<dd class="mt-1 text-sm leading-relaxed text-muted">
-						Environment variables for the guest cap, room lifetime and play
-						lead. <code class="text-zinc-300">AUTH_TOKEN</code> keeps the socket
-						private; put Caddy or nginx in front for TLS.
-					</dd>
-				</div>
+				{
+					points.map((key) => (
+						<div class="min-w-0">
+							<dt class="text-sm font-semibold text-ink">{t.tour.relay.points[key].title}</dt>
+							<dd class="mt-1 text-sm leading-relaxed text-muted">
+								<Phrase value={t.tour.relay.points[key].body} />
+							</dd>
+						</div>
+					))
+				}
 			</dl>
 
 			<a
@@ -105,7 +88,7 @@ const shots = [
 				class="mt-5 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/10 bg-paper px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-raised"
 			>
 				<Github size={15} aria-hidden="true" />
-				Jota-Music/relay
+				{t.tour.relay.cta}
 			</a>
 		</div>
 
@@ -116,7 +99,7 @@ const shots = [
 				href="#download"
 				class="inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink shadow-lg shadow-black/50 transition-transform hover:-translate-y-px"
 			>
-				Try it — download Jota
+				{t.tour.download}
 				<ArrowRight size={16} aria-hidden="true" />
 			</a>
 		</div>

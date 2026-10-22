@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Nav from "@/sections/Nav.astro";
+import Hero from "@/sections/Hero.astro";
+import Features from "@/sections/Features.astro";
+import Tour from "@/sections/Tour.astro";
+import Download from "@/sections/Download.astro";
+import FAQ from "@/sections/FAQ.astro";
+import Footer from "@/sections/Footer.astro";
+import { landing } from "@/i18n";
+
+const t = await landing(Astro.currentLocale);
+---
+
+<Layout>
+	<Nav t={t} />
+	<main>
+		<Hero t={t} />
+		<Features t={t} />
+		<Tour t={t} />
+		<Download t={t} />
+		<FAQ t={t} />
+	</main>
+	<Footer t={t} />
+</Layout>

@@ -15,24 +15,31 @@ import {
 	UserPlus,
 	Users,
 } from "lucide-astro";
+import type { Landing } from "@/i18n/landing/schema";
+
+interface Props {
+	t: Landing;
+}
+
+const { t } = Astro.props;
 
 const also = [
-	{ icon: Monitor, label: "Cross-platform, one codebase" },
-	{ icon: RefreshCw, label: "Auto-update in place" },
-	{ icon: Languages, label: "English and Spanish" },
-	{ icon: ListPlus, label: "Custom local playlists" },
-	{ icon: UserPlus, label: "Following across sources" },
-	{ icon: CloudOff, label: "Data stays local" },
-];
+	{ icon: Monitor, key: "crossPlatform" },
+	{ icon: RefreshCw, key: "updates" },
+	{ icon: Languages, key: "languages" },
+	{ icon: ListPlus, key: "playlists" },
+	{ icon: UserPlus, key: "following" },
+	{ icon: CloudOff, key: "local" },
+] as const;
 ---
 
 <section id="features" class="scroll-mt-28 py-16 md:py-24">
 	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
 		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">
-			Features
+			{t.features.eyebrow}
 		</p>
 		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight wrap-anywhere sm:text-4xl">
-			Everything in one player.
+			{t.features.title}
 		</h2>
 
 		<div class="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-6">
@@ -45,12 +52,10 @@ const also = [
 					<Disc3 size={18} aria-hidden="true" />
 				</span>
 				<h3 class="mt-4 text-sm font-semibold text-ink">
-					Two sources, one player
+					{t.features.cards.sources.title}
 				</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Browse Spotify and YouTube side by side and play either from the
-					same queue and search bar. Spotify is optional — the YouTube side
-					works standalone.
+					{t.features.cards.sources.body}
 				</p>
 			</article>
 
@@ -62,10 +67,9 @@ const also = [
 				>
 					<Radio size={18} aria-hidden="true" />
 				</span>
-				<h3 class="mt-4 text-sm font-semibold text-ink">Song radio</h3>
+				<h3 class="mt-4 text-sm font-semibold text-ink">{t.features.cards.radio.title}</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Turn any Spotify track into a station of similar songs and play it
-					like any other playlist.
+					{t.features.cards.radio.body}
 				</p>
 			</article>
 
@@ -77,10 +81,9 @@ const also = [
 				>
 					<ListMusic size={18} aria-hidden="true" />
 				</span>
-				<h3 class="mt-4 text-sm font-semibold text-ink">Browse Spotify</h3>
+				<h3 class="mt-4 text-sm font-semibold text-ink">{t.features.cards.spotify.title}</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Log in to browse playlists, albums, artists, tracks and other users'
-					public playlists — type a song, an artist or paste a link.
+					{t.features.cards.spotify.body}
 				</p>
 			</article>
 
@@ -93,11 +96,10 @@ const also = [
 					<Play size={18} aria-hidden="true" />
 				</span>
 				<h3 class="mt-4 text-sm font-semibold text-ink">
-					YouTube first-class
+					{t.features.cards.youtube.title}
 				</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Search videos, playlists and channels, save them to your home shelf,
-					or paste a link to jump straight in. Fix a wrong match by hand.
+					{t.features.cards.youtube.body}
 				</p>
 			</article>
 
@@ -109,10 +111,9 @@ const also = [
 				>
 					<Shuffle size={18} aria-hidden="true" />
 				</span>
-				<h3 class="mt-4 text-sm font-semibold text-ink">Full player</h3>
+				<h3 class="mt-4 text-sm font-semibold text-ink">{t.features.cards.player.title}</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Play/pause, seek, volume, shuffle and repeat, plus a queue you can
-					reorder and prune. Jota picks up where you left off after a restart.
+					{t.features.cards.player.body}
 				</p>
 			</article>
 
@@ -124,11 +125,9 @@ const also = [
 				>
 					<Users size={18} aria-hidden="true" />
 				</span>
-				<h3 class="mt-4 text-sm font-semibold text-ink">Rooms</h3>
+				<h3 class="mt-4 text-sm font-semibold text-ink">{t.features.cards.rooms.title}</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Save a room, see who is listening, and sync queue, play/pause,
-					position, shuffle and repeat across devices over your own WebSocket
-					relay.
+					{t.features.cards.rooms.body}
 				</p>
 			</article>
 
@@ -141,11 +140,10 @@ const also = [
 					<Headphones size={18} aria-hidden="true" />
 				</span>
 				<h3 class="mt-4 text-sm font-semibold text-ink">
-					Native media controls
+					{t.features.cards.media.title}
 				</h3>
 				<p class="mt-2 text-sm leading-relaxed text-balance text-muted">
-					Media keys, lock-screen and notification controls on desktop and
-					mobile.
+					{t.features.cards.media.body}
 				</p>
 			</article>
 
@@ -158,10 +156,9 @@ const also = [
 					<ShieldCheck size={18} aria-hidden="true" />
 				</span>
 				<div class="min-w-0">
-					<h3 class="text-sm font-semibold text-ink">Private by default</h3>
+					<h3 class="text-sm font-semibold text-ink">{t.features.cards.privacy.title}</h3>
 					<p class="mt-1 text-sm leading-relaxed text-balance text-muted">
-						Data stays local. No accounts, no telemetry, no third-party servers
-						— save the app log from settings when reporting a bug.
+						{t.features.cards.privacy.body}
 					</p>
 				</div>
 			</article>
@@ -169,10 +166,10 @@ const also = [
 
 		<ul class="mt-6 flex flex-wrap gap-2">
 			{
-				also.map(({ icon: Icon, label }) => (
+				also.map(({ icon: Icon, key }) => (
 					<li class="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-surface/50 px-3 py-1.5 text-xs text-zinc-300">
 						<Icon size={13} aria-hidden="true" class="text-dim" />
-						{label}
+						{t.features.also[key]}
 					</li>
 				))
 			}

@@ -1,20 +1,21 @@
 ---
 import "../styles/global.css";
 import Analytics from "@vercel/analytics/astro";
+import { landing, locales, path, defaultLocale, type Locale } from "@/i18n";
 
-interface Props {
-	title?: string;
-	description?: string;
-}
+const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+const { meta } = await landing(locale);
+const { title, description } = meta;
 
-const {
-	title = "Jota — your music, your rules",
-	description = "A self-hosted music streaming app for desktop and mobile. Browse Spotify, play the audio through YouTube, and start a room over a relay you own. No cloud. No tracking. No subscriptions.",
-} = Astro.props;
+const og: Record<Locale, string> = { en: "en_US", es: "es_ES" };
+const alternates = [
+	...locales.map((code) => ({ hreflang: code, href: path(code) })),
+	{ hreflang: "x-default", href: path(defaultLocale) },
+];
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,7 +25,13 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#09090b" />
+		{
+			alternates.map((alternate) => (
+				<link rel="alternate" hreflang={alternate.hreflang} href={new URL(alternate.href, Astro.site)} />
+			))
+		}
 		<meta property="og:type" content="website" />
+		<meta property="og:locale" content={og[locale]} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={new URL("/img/banner.png", Astro.site)} />

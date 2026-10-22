@@ -1,12 +1,19 @@
 ---
 import { CloudOff, Code, CreditCard, Download, EyeOff, Github } from "lucide-astro";
+import type { Landing } from "@/i18n/landing/schema";
+
+interface Props {
+	t: Landing;
+}
+
+const { t } = Astro.props;
 
 const promises = [
-	{ icon: CloudOff, label: "No cloud" },
-	{ icon: EyeOff, label: "No tracking" },
-	{ icon: CreditCard, label: "No subscriptions" },
-	{ icon: Code, label: "Open source" },
-];
+	{ icon: CloudOff, key: "cloud" },
+	{ icon: EyeOff, key: "tracking" },
+	{ icon: CreditCard, key: "subscriptions" },
+	{ icon: Code, key: "source" },
+] as const;
 
 const version = await fetch("https://api.github.com/repos/Jota-Music/jota/releases/latest")
 	.then((r) => r.ok && r.json())
@@ -24,24 +31,22 @@ const version = await fetch("https://api.github.com/repos/Jota-Music/jota/releas
 				class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/60 px-3 py-1 text-xs text-muted"
 			>
 				<span class="size-1.5 rounded-full bg-accent"></span>
-				Self-hosted music streaming
+				{t.hero.badge}
 			</p>
 			<h1
 				class="mt-5 text-4xl font-bold tracking-tight text-balance [overflow-wrap:anywhere] sm:text-5xl lg:text-6xl"
 			>
-				Your music, your rules.
+				{t.hero.title}
 			</h1>
 			<p class="mt-5 max-w-xl text-base leading-relaxed text-balance text-muted sm:text-lg">
-				A self-hosted music streaming app for desktop and mobile. Browse
-				Spotify, play the audio through YouTube, and start a room over a relay
-				you own.
+				{t.hero.body}
 			</p>
 			<ul class="mt-6 flex flex-wrap gap-2">
 				{
-					promises.map(({ icon: Icon, label }) => (
+					promises.map(({ icon: Icon, key }) => (
 						<li class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-surface/60 px-3 py-1.5 text-xs text-zinc-300">
 							<Icon size={13} aria-hidden="true" class="text-accent" />
-							{label}
+							{t.hero.promises[key]}
 						</li>
 					))
 				}
@@ -53,7 +58,7 @@ const version = await fetch("https://api.github.com/repos/Jota-Music/jota/releas
 					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 				>
 					<Download size={16} aria-hidden="true" />
-					Download Jota {version}
+					{t.hero.download} {version}
 				</a>
 				<a
 					href="https://github.com/Jota-Music/jota"
@@ -61,17 +66,15 @@ const version = await fetch("https://api.github.com/repos/Jota-Music/jota/releas
 					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-6 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
 				>
 					<Github size={16} aria-hidden="true" />
-					View source
+					{t.hero.source}
 				</a>
 			</div>
-			<p class="mt-4 text-xs text-balance text-dim">
-				Linux · Windows · macOS · Android — free, GPL-3.0.
-			</p>
+			<p class="mt-4 text-xs text-balance text-dim">{t.hero.note}</p>
 		</div>
 		<figure class="min-w-0 md:col-span-5">
 			<img
 				src="/img/screenshot-home.png"
-				alt="Home — saved playlists from Spotify and YouTube"
+				alt={t.hero.image}
 				width="1119"
 				height="1011"
 				class="w-full rounded-xl border border-zinc-800 bg-paper"

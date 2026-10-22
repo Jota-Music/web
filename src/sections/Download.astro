@@ -1,98 +1,74 @@
 ---
-import { Apple, ArrowRight, Download, Monitor, Smartphone, Terminal } from "lucide-astro";
+import { Apple, Download, Monitor, Smartphone, Terminal } from "lucide-astro";
+import Phrase from "@/i18n/Phrase.astro";
+import type { Landing } from "@/i18n/landing/schema";
+
+interface Props {
+	t: Landing;
+}
+
+const { t } = Astro.props;
 
 const base = "https://github.com/Jota-Music/jota/releases/latest/download";
 
 const rows = [
-	{
-		icon: Terminal,
-		platform: "Linux",
-		artifacts: [
-			{ label: ".deb", file: "jota.deb" },
-			{ label: ".rpm", file: "jota.rpm" },
-			{ label: ".AppImage", file: "jota-x86_64.AppImage" },
-			{ label: ".flatpak", file: "jota.flatpak" },
-			{ label: "Arch", file: "jota.pkg.tar.zst" },
-		],
-		note: "AppImage updates in place",
-	},
-	{
-		icon: Smartphone,
-		platform: "Android",
-		artifacts: [{ label: ".apk", file: "jota.apk" }],
-		note: "Updates in place on launch",
-	},
-	{
-		icon: Monitor,
-		platform: "Windows",
-		artifacts: [{ label: "installer .exe", file: "jota-amd64-installer.exe" }],
-		note: "Per-user installs in place",
-	},
-	{
-		icon: Apple,
-		platform: "macOS",
-		artifacts: [{ label: "universal .dmg", file: "jota.dmg" }],
-		note: "Updates in place on launch",
-	},
-];
+	{ icon: Terminal, key: "linux" },
+	{ icon: Smartphone, key: "android" },
+	{ icon: Monitor, key: "windows" },
+	{ icon: Apple, key: "macos" },
+] as const;
+
+const links = {
+	sums: `${base}/SHA256SUMS`,
+	releases: "https://github.com/Jota-Music/jota/releases",
+};
 ---
 
 <section id="download" class="scroll-mt-28 py-16 md:py-24">
 	<div class="mx-auto w-full max-w-6xl px-4 sm:px-6">
-		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">Download</p>
+		<p class="text-xs font-medium tracking-[0.18em] text-dim uppercase">{t.download.eyebrow}</p>
 		<h2 class="mt-3 max-w-2xl text-3xl font-bold tracking-tight wrap-anywhere sm:text-4xl">
-			Pick your platform.
+			{t.download.title}
 		</h2>
 		<p class="mt-4 max-w-xl text-sm leading-relaxed text-balance text-muted">
-			Grab a build straight from here — no signup, no detours. Jota checks
-			for updates on launch and installs them in place on AppImage, macOS <code
-				class="text-zinc-300">.app</code
-			>, Windows per-user and Android.
+			<Phrase value={t.download.body} />
 		</p>
 
 		<ul class="mt-8 border-t border-zinc-800 sm:grid sm:grid-cols-[max-content_1fr_max-content]">
 			{
-				rows.map(({ icon: Icon, platform, artifacts, note }) => (
+				rows.map(({ icon: Icon, key }) => (
 					<li class="grid gap-y-2 border-b border-zinc-800 py-4 sm:col-span-3 sm:grid-cols-subgrid sm:items-center sm:gap-x-4">
 						<span class="flex items-center gap-2.5 text-sm font-semibold text-ink">
 							<Icon size={16} aria-hidden="true" class="text-accent" />
-							{platform}
+							{t.download.rows[key].platform}
 						</span>
 						<ul class="flex min-w-0 flex-wrap items-center gap-2">
-							{
-								artifacts.map(({ label, file }) => (
-									<li>
-										<a
-											href={`${base}/${file}`}
-											class="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 transition-colors hover:border-accent hover:text-ink"
-										>
-											<Download size={13} aria-hidden="true" />
-											{label}
-										</a>
-									</li>
-								))
-							}
+							{Object.entries(t.download.rows[key].artifacts).map(([file, label]) => (
+								<li>
+									<a
+										href={`${base}/${file}`}
+										class="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 transition-colors hover:border-accent hover:text-ink"
+									>
+										<Download size={13} aria-hidden="true" />
+										{label}
+									</a>
+								</li>
+							))}
 						</ul>
-						<span class="text-xs text-dim sm:text-right">{note}</span>
+						<span class="text-xs text-dim sm:text-right">{t.download.rows[key].note}</span>
 					</li>
 				))
 			}
 		</ul>
 
 		<p class="mt-6 text-xs leading-relaxed text-balance text-dim">
-			Windows <code class="text-zinc-400">.exe</code> and macOS <code
-				class="text-zinc-400">.dmg</code
-			> are unsigned — SmartScreen and Gatekeeper may flag them. Checksums are
-			in <a
-				href={`${base}/SHA256SUMS`}
-				class="text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
-				>SHA256SUMS</a
-			>, and every past version lives on the <a
-				href="https://github.com/Jota-Music/jota/releases"
-				rel="noreferrer"
-				class="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
-				>releases page<ArrowRight size={12} aria-hidden="true" /></a
-			>.
+			<Phrase
+				value={t.download.legal}
+				links={links}
+				code="text-zinc-400"
+				link="inline-flex items-center gap-1 text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-ink"
+				arrows={["releases"]}
+			/>
 		</p>
 	</div>
 </section>

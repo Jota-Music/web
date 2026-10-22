@@ -1,9 +1,16 @@
 ---
 import { Download, Github } from "lucide-astro";
+import type { Landing } from "@/i18n/landing/schema";
+
+interface Props {
+	t: Landing;
+}
+
+const { t } = Astro.props;
 
 const links = [
-	{ href: "#features", label: "Features" },
-	{ href: "#tour", label: "In use" },
+	{ href: "#features", label: t.nav.features },
+	{ href: "#tour", label: t.nav.tour },
 ];
 ---
 
@@ -38,7 +45,7 @@ const links = [
 					class="flex items-center gap-1.5 rounded-full px-3 py-2 text-sm text-muted transition-colors hover:text-ink"
 				>
 					<Github size={15} aria-hidden="true" />
-					GitHub
+					{t.nav.github}
 				</a>
 			</li>
 		</ul>
@@ -47,7 +54,7 @@ const links = [
 			class="ml-auto inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px sm:ml-2"
 		>
 			<Download size={15} aria-hidden="true" />
-			Download
+			{t.nav.download}
 		</a>
 	</nav>
 </header>
