@@ -5,6 +5,7 @@ import Hero from "@/sections/Hero.astro";
 import Features from "@/sections/Features.astro";
 import Tour from "@/sections/Tour.astro";
 import Download from "@/sections/Download.astro";
+import Stories from "@/sections/Stories.astro";
 import FAQ from "@/sections/FAQ.astro";
 import Footer from "@/sections/Footer.astro";
 import { landing, match } from "@/i18n";
@@ -19,6 +20,7 @@ const t = await landing(match(Astro.url.pathname));
 		<Features t={t} />
 		<Tour t={t} />
 		<Download t={t} />
+		<Stories t={t} locale={match(Astro.url.pathname)} />
 		<FAQ t={t} />
 	</main>
 	<Footer t={t} />

@@ -210,12 +210,22 @@ export default {
 			".",
 		],
 	},
+	stories: {
+		eyebrow: "Story",
+		title: "Share Jota in your stories.",
+		body: "A ready-made Instagram image with the app in a nutshell and a real screenshot of the player.",
+		download: "Download PNG",
+		share: "Share",
+		instagram: "Share on Instagram",
+		hint: "1080 × 1920 PNG, no watermark.",
+	},
 	footer: {
 		headline: ["No cloud.", "No tracking.", "No subscriptions."],
 		links: {
 			github: "GitHub",
 			releases: "Releases",
 			relay: "Relay",
+			stories: "Share a story",
 			warp: "WARP guide",
 		},
 		github: "Jota on GitHub",

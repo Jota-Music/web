@@ -1,0 +1,14 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Stories from "@/sections/Stories.astro";
+import { landing, match } from "@/i18n";
+
+const locale = match(Astro.url.pathname);
+const t = await landing(locale);
+---
+
+<Layout>
+	<main>
+		<Stories t={t} locale={locale} />
+	</main>
+</Layout>

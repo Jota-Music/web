@@ -30,7 +30,7 @@ export type PointKey = "code" | "catchup" | "tune";
 
 export type RowKey = "linux" | "android" | "windows" | "macos";
 
-export type FooterKey = "github" | "releases" | "relay" | "warp";
+export type FooterKey = "github" | "releases" | "relay" | "warp" | "stories";
 
 export interface Landing {
 	meta: {
@@ -85,6 +85,15 @@ export interface Landing {
 		label: string;
 		items: { q: string; a: string }[];
 		more: Phrase;
+	};
+	stories: {
+		eyebrow: string;
+		title: string;
+		body: string;
+		download: string;
+		share: string;
+		instagram: string;
+		hint: string;
 	};
 	footer: {
 		headline: string[];
