@@ -178,6 +178,10 @@ export default {
 				a: "Yes. Spotify is optional — the YouTube side works standalone. You can browse YouTube, create playlists, and listen without any Spotify account.",
 			},
 			{
+				q: "Can I edit a Spotify or YouTube playlist in Jota?",
+				a: "No. Saved Spotify and YouTube playlists are read-only mirrors: edit them in Spotify or YouTube and Jota picks the changes up the next time the playlist loads. For lists of your own, use local playlists — they mix Spotify and YouTube tracks and reorder by dragging.",
+			},
+			{
 				q: "Is my data sent to any servers?",
 				a: "No. Data stays local. No accounts, no telemetry, no third-party servers. Playback is fetched at runtime from your own session.",
 			},

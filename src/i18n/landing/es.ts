@@ -178,6 +178,10 @@ export default {
 				a: "Sí. Spotify es opcional: la parte de YouTube funciona por sí sola. Puedes explorar YouTube, crear playlists y escuchar sin ninguna cuenta de Spotify.",
 			},
 			{
+				q: "¿Puedo editar una playlist de Spotify o YouTube en Jota?",
+				a: "No. Las playlists de Spotify y YouTube guardadas son espejos de solo lectura: edítalas en Spotify o YouTube y Jota recogerá los cambios la próxima vez que cargue la playlist. Para listas propias están las playlists locales, que mezclan temas de Spotify y YouTube y se reordenan arrastrando.",
+			},
+			{
 				q: "¿Mis datos se envían a algún servidor?",
 				a: "No. Los datos se quedan en local. Sin cuentas, sin telemetría, sin servidores de terceros. La reproducción se obtiene en tiempo de ejecución desde tu propia sesión.",
 			},
