@@ -11,9 +11,13 @@ const loaders: Record<Locale, () => Promise<{ default: Landing }>> = {
 	es: () => import("@/i18n/landing/es"),
 };
 
-export async function landing(locale: string | undefined): Promise<Landing> {
-	const load = loaders[locale as Locale] ?? loaders[defaultLocale];
-	return (await load()).default;
+export function match(pathname: string): Locale {
+	const [first] = pathname.split("/").filter(Boolean);
+	return locales.includes(first as Locale) ? (first as Locale) : defaultLocale;
+}
+
+export async function landing(locale: Locale): Promise<Landing> {
+	return (await loaders[locale]()).default;
 }
 
 export function path(locale: Locale): string {

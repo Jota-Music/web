@@ -1,7 +1,7 @@
 ---
 import { Download, Github } from "lucide-astro";
 import type { Landing } from "@/i18n/landing/schema";
-import { locales, path, defaultLocale, type Locale } from "@/i18n";
+import { locales, match, path, type Locale } from "@/i18n";
 
 interface Props {
 	t: Landing;
@@ -9,7 +9,7 @@ interface Props {
 
 const { t } = Astro.props;
 
-const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+const locale = match(Astro.url.pathname);
 
 const codes: Record<Locale, string> = { en: "EN", es: "ES" };
 

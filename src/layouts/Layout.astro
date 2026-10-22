@@ -1,9 +1,9 @@
 ---
 import "../styles/global.css";
 import Analytics from "@vercel/analytics/astro";
-import { landing, locales, path, defaultLocale, type Locale } from "@/i18n";
+import { landing, locales, match, path, defaultLocale, type Locale } from "@/i18n";
 
-const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+const locale = match(Astro.url.pathname);
 const { meta } = await landing(locale);
 const { title, description } = meta;
 

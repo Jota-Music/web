@@ -7,9 +7,9 @@ import Tour from "@/sections/Tour.astro";
 import Download from "@/sections/Download.astro";
 import FAQ from "@/sections/FAQ.astro";
 import Footer from "@/sections/Footer.astro";
-import { landing } from "@/i18n";
+import { landing, match } from "@/i18n";
 
-const t = await landing(Astro.currentLocale);
+const t = await landing(match(Astro.url.pathname));
 ---
 
 <Layout>
