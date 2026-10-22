@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Analytics from "@vercel/analytics/astro";
+import { ClientRouter } from "astro:transitions";
 import { landing, locales, match, path, defaultLocale, type Locale } from "@/i18n";
 
 const locale = match(Astro.url.pathname);
@@ -19,6 +20,7 @@ const alternates = [
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style is:inline>html{background-color:#09090b}</style>
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -42,6 +44,7 @@ const alternates = [
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL("/img/banner.png", Astro.site)} />
 		<title>{title}</title>
+		<ClientRouter />
 	</head>
 	<body class="antialiased">
 		<slot />
