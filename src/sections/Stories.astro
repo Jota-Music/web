@@ -48,7 +48,7 @@ const share = new URL(
 							data-copy
 							data-copy-url={share}
 							data-copied={t.stories.copied}
-							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-4 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
+							class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-4 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
 						>
 							<Copy size={14} aria-hidden="true" />
 							<span data-copy-label aria-live="polite">{t.stories.copy}</span>
@@ -61,7 +61,7 @@ const share = new URL(
 							href={`/stories-${locale}.png`}
 							download={`jota-stories-${locale}.png`}
 							data-download
-							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
+							class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-accent px-4 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 						>
 							<Download size={14} aria-hidden="true" />
 							{t.stories.download}
