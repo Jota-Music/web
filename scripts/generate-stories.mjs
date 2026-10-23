@@ -168,9 +168,8 @@ async function main() {
 		const boxH = 56;
 		const boxY = y + 84;
 		const text = "LINK AQUÍ";
-		const boxW = ctx.measureText(text).width + 24;
-
 		ctx.font = font(600, 20);
+		const boxW = ctx.measureText(text).width + 24;
 		ctx.setLineDash([12, 10]);
 		ctx.strokeStyle = MUTED;
 		ctx.lineWidth = 2;
