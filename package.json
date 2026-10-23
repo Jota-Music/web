@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "bun scripts/generate-stories.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro"
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@napi-rs/canvas": "^1.0.13",
     "typescript": "6"
   }
 }
