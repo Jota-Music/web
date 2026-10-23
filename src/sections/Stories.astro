@@ -71,7 +71,7 @@ const { t, locale } = Astro.props;
 				data-stories
 				data-locale={locale}
 				data-title={t.hero.title}
-				data-body={t.hero.body}
+				data-body={t.stories.imageBody}
 				data-promises={Object.values(t.hero.promises).join("|")}
 				data-badge={t.stories.free}
 				width="1080"
@@ -122,20 +122,23 @@ const { t, locale } = Astro.props;
 
 		const wrap = (text: string, max: number) => {
 			const lines: string[] = [];
-			let line = "";
 
-			for (const word of text.split(/\s+/)) {
-				const next = line ? `${line} ${word}` : word;
+			for (const paragraph of text.split("\n")) {
+				let line = "";
 
-				if (line && ctx.measureText(next).width > max) {
-					lines.push(line);
-					line = word;
-				} else {
-					line = next;
+				for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+					const next = line ? `${line} ${word}` : word;
+
+					if (line && ctx.measureText(next).width > max) {
+						lines.push(line);
+						line = word;
+					} else {
+						line = next;
+					}
 				}
-			}
 
-			if (line) lines.push(line);
+				if (line) lines.push(line);
+			}
 
 			if (import.meta.env.DEV) {
 				for (const wrapped of lines) {
@@ -196,8 +199,6 @@ const { t, locale } = Astro.props;
 			ctx.fillText("Jota", left, y);
 			y += 152;
 
-			ctx.fillStyle = accent;
-			ctx.fillRect(left, y, 128, 10);
 			y += 46;
 
 			ctx.font = font(700, 28);
@@ -222,11 +223,11 @@ const { t, locale } = Astro.props;
 			}
 			y += 16;
 
-			ctx.font = font(400, 38);
+			ctx.font = font(400, 36);
 			ctx.fillStyle = MUTED;
 			for (const line of wrap(canvas.dataset.body ?? "", max)) {
 				ctx.fillText(line, left, y);
-				y += 50;
+				y += 46;
 			}
 			y += 44;
 
@@ -263,14 +264,21 @@ const { t, locale } = Astro.props;
 				x += width + gap;
 				i += 1;
 			}
-			y += pill + 44;
+			y += pill + 28;
 
-			ctx.font = font(600, 30);
+			ctx.font = font(500, 24);
+			ctx.fillStyle = MUTED;
+			ctx.textAlign = "left";
+			ctx.textBaseline = "middle";
+			ctx.fillText("Linux  ·  Android  ·  Windows  ·  macOS", left, y + 12);
+			ctx.textBaseline = "top";
+
+			ctx.font = font(600, 20);
 			const text = "LINK AQUÍ";
 			const textW = ctx.measureText(text).width;
-			const boxW = textW + 48;
-			const boxH = 120;
-			const boxY = y + 24;
+			const boxW = textW + 24;
+			const boxH = 56;
+			const boxY = y + 84;
 
 			ctx.setLineDash([12, 10]);
 			ctx.strokeStyle = MUTED;
@@ -282,9 +290,9 @@ const { t, locale } = Astro.props;
 			ctx.fillStyle = MUTED;
 			ctx.textAlign = "left";
 			ctx.textBaseline = "middle";
-			ctx.fillText(text, left + 24, boxY + boxH / 2);
+			ctx.fillText(text, left + 12, boxY + boxH / 2);
 
-			const shotY = boxY + boxH + 40;
+			const shotY = boxY + boxH + 72;
 			const height = Math.max(bottom - shotY, 0);
 
 			if (shot) {
