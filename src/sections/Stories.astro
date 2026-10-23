@@ -93,11 +93,11 @@ const { t, locale } = Astro.props;
 	const SURFACE = "#18181b";
 	const EDGE = "#27272a";
 
-	const canvas = document.querySelector("[data-stories]");
-	const ctx = canvas instanceof HTMLCanvasElement ? canvas.getContext("2d") : null;
-
 	async function init() {
-		if (!(canvas instanceof HTMLCanvasElement) || !ctx || canvas.dataset.drawn === "1") return;
+		const canvas = document.querySelector("[data-stories]");
+		if (!(canvas instanceof HTMLCanvasElement)) return;
+		const ctx = canvas.getContext("2d");
+		if (!ctx || canvas.dataset.drawn === "1") return;
 		canvas.dataset.drawn = "1";
 		const { width: W, height: H } = canvas;
 		const name = `jota-stories-${canvas.dataset.locale ?? "en"}.png`;
@@ -344,6 +344,7 @@ const { t, locale } = Astro.props;
 	}
 
 	const schedule = () => {
+		const canvas = document.querySelector("[data-stories]");
 		if (!(canvas instanceof HTMLCanvasElement) || canvas.dataset.drawn === "1") return;
 		void init();
 	};
