@@ -24,6 +24,14 @@ const { t, locale } = Astro.props;
 			<div class="mt-8 flex flex-wrap items-center gap-3" data-actions>
 				<button
 					type="button"
+					data-copy
+					data-copied={t.stories.copied}
+					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-6 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
+				>
+					{t.stories.copy}
+				</button>
+				<button
+					type="button"
 					data-download
 					disabled
 					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
@@ -80,6 +88,7 @@ const { t, locale } = Astro.props;
 		const name = `jota-stories-${canvas.dataset.locale ?? "en"}.png`;
 		const section = canvas.closest("section");
 		const saveButton = section?.querySelector<HTMLButtonElement>("[data-download]");
+		const copyButton = section?.querySelector<HTMLButtonElement>("[data-copy]");
 		const actions = section?.querySelector<HTMLElement>("[data-actions]");
 		const hint = section?.querySelector<HTMLElement>("[data-hint]");
 		const after = section?.querySelector<HTMLElement>("[data-after]");
@@ -287,6 +296,13 @@ const { t, locale } = Astro.props;
 			after?.classList.remove("hidden");
 			if (hint) hint.textContent = "";
 		};
+
+		copyButton?.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(window.location.href);
+				if (copyButton) copyButton.textContent = copyButton.dataset.copied ?? "Copied";
+			} catch {}
+		});
 
 		saveButton?.addEventListener("click", async () => {
 			await save();

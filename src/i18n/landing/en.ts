@@ -218,7 +218,9 @@ export default {
 		share: "Share",
 		instagram: "Share on Instagram",
 		hint: "1080 × 1920 PNG, no watermark.",
-		instructions: "Download the image, open Instagram, create a story, add the image, and paste the link where it says \"LINK HERE\".",
+		instructions: "1. Copy the link. 2. Download the image. 3. Open Instagram, create a story and add the image. 4. Paste the link.",
+		copy: "Copy link",
+		copied: "Copied",
 	},
 	footer: {
 		headline: ["No cloud.", "No tracking.", "No subscriptions."],
