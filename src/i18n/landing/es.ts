@@ -219,6 +219,7 @@ export default {
 		instagram: "Compartir en Instagram",
 		hint: "PNG de 1080 × 1920, sin marca de agua.",
 		instructions: "Compartir en Instagram",
+		intro: "¿Te ha gustado la app? Compártela en un toque con una historia lista.",
 		step1: "Copia el enlace al portapapeles.",
 		step2: "Descarga la imagen de la historia.",
 		step3: "Abre Instagram, crea una historia, añade la imagen y pega el enlace.",

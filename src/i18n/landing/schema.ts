@@ -95,6 +95,7 @@ export interface Landing {
 		instagram: string;
 		hint: string;
 		instructions: string;
+		intro: string;
 		step1: string;
 		step2: string;
 		step3: string;
