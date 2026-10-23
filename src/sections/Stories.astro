@@ -96,7 +96,9 @@ const { t, locale } = Astro.props;
 	const canvas = document.querySelector("[data-stories]");
 	const ctx = canvas instanceof HTMLCanvasElement ? canvas.getContext("2d") : null;
 
-	if (canvas instanceof HTMLCanvasElement && ctx) {
+	async function init() {
+		if (!(canvas instanceof HTMLCanvasElement) || !ctx || canvas.dataset.drawn === "1") return;
+		canvas.dataset.drawn = "1";
 		const { width: W, height: H } = canvas;
 		const name = `jota-stories-${canvas.dataset.locale ?? "en"}.png`;
 		const section = canvas.closest("section");
@@ -340,4 +342,16 @@ const { t, locale } = Astro.props;
 
 		if (saveButton) saveButton.disabled = false;
 	}
+
+	const schedule = () => {
+		if (!(canvas instanceof HTMLCanvasElement) || canvas.dataset.drawn === "1") return;
+		void init();
+	};
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", schedule, { once: true });
+	} else {
+		schedule();
+	}
+	document.addEventListener("astro:page-load", schedule);
 </script>
