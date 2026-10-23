@@ -5,8 +5,9 @@ import { ClientRouter } from "astro:transitions";
 import { landing, locales, match, path, defaultLocale, type Locale } from "@/i18n";
 
 const locale = match(Astro.url.pathname);
-const { meta } = await landing(locale);
+const { meta, nav } = await landing(locale);
 const { title, description } = meta;
+const prompt = nav.languagePrompt;
 
 const og: Record<Locale, string> = { en: "en_US", es: "es_ES" };
 const alternates = [
@@ -48,6 +49,72 @@ const alternates = [
 	</head>
 	<body class="antialiased">
 		<slot />
+		<dialog
+			id="lang-prompt"
+			data-current={locale}
+			data-body={prompt.body}
+			class="m-auto w-[min(92vw,24rem)] rounded-2xl border border-white/10 bg-paper p-0 text-ink shadow-2xl backdrop:bg-black/60"
+		>
+			<form method="dialog" class="flex flex-col gap-4 p-6">
+				<h2 class="text-base font-semibold">{prompt.title}</h2>
+				<p id="lang-prompt-body" class="text-sm text-muted"></p>
+				<div class="flex justify-end gap-2">
+					<button
+						value="keep"
+						class="rounded-full border border-white/10 px-4 py-2 text-sm text-muted outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-white/40"
+					>
+						{prompt.keep}
+					</button>
+					<button
+						id="lang-prompt-switch"
+						type="button"
+						class="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
+					>
+						{prompt.switch}
+					</button>
+				</div>
+			</form>
+		</dialog>
+		<script is:inline>
+			(() => {
+				const dialog = document.getElementById("lang-prompt");
+				if (!dialog) return;
+				if (sessionStorage.getItem("lang-prompt-checked")) return;
+				sessionStorage.setItem("lang-prompt-checked", "1");
+				const current = dialog.dataset.current;
+				const supported = ["en", "es"];
+				const device = (navigator.language || "").slice(0, 2).toLowerCase();
+				if (!supported.includes(device) || device === current) return;
+				if (localStorage.getItem("lang-prompt-dismissed") === device) return;
+
+				const names = { en: "English", es: "Español" };
+				const body = (dialog.dataset.body || "")
+					.replace("{current}", names[current] || current)
+					.replace("{device}", names[device] || device);
+				const bodyEl = document.getElementById("lang-prompt-body");
+				if (bodyEl) bodyEl.textContent = body;
+
+				try {
+					dialog.showModal();
+				} catch {}
+
+				const switchBtn = document.getElementById("lang-prompt-switch");
+				switchBtn?.addEventListener("click", () => {
+					let path = location.pathname;
+					if (current !== "en") {
+						path = path.replace(/^\/(es)(?=\/|$)/, "") || "/";
+					}
+					if (device !== "en") {
+						path = "/" + device + (path === "/" ? "/" : path);
+					}
+					location.href = path + location.search + location.hash;
+				});
+
+				dialog.addEventListener("close", () => {
+					localStorage.setItem("lang-prompt-dismissed", device);
+				});
+			})();
+		</script>
 		<Analytics />
 	</body>
 </html>
