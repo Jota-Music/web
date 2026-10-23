@@ -167,6 +167,9 @@ export default {
 			{ link: "releases", label: "releases page" },
 			".",
 		],
+		warning: [
+			"The app is not code-signed, but it is safe: Jota is open source, so anyone can review the code. Signing costs money we would rather spend on the app itself.",
+		],
 	},
 	faq: {
 		eyebrow: "FAQ",

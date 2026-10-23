@@ -78,6 +78,7 @@ export interface Landing {
 		body: Phrase;
 		rows: Record<RowKey, { platform: string; artifacts: Record<string, string>; note: string }>;
 		legal: Phrase;
+		warning: Phrase;
 	};
 	faq: {
 		eyebrow: string;
