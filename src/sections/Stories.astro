@@ -82,27 +82,38 @@ const Heading = heading;
 </section>
 
 <script>
-	const copyButton = document.querySelector<HTMLButtonElement>("[data-copy]");
-	copyButton?.addEventListener("click", async () => {
-		try {
-			await navigator.clipboard.writeText(window.location.href);
-			const label = copyButton.querySelector<HTMLElement>("[data-copy-label]");
-			if (label) label.textContent = copyButton.dataset.copied ?? "Copied";
-		} catch {}
-	});
+	document.addEventListener("astro:page-load", () => {
+		const copyButton = document.querySelector<HTMLButtonElement>("[data-copy]");
+		copyButton?.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(copyButton.dataset.copyUrl ?? window.location.href);
+				const label = copyButton.querySelector<HTMLElement>("[data-copy-label]");
+				if (!label) return;
+				const original = label.textContent;
+				label.textContent = copyButton.dataset.copied ?? "Copied";
+				setTimeout(() => (label.textContent = original), 2000);
+			} catch {}
+		});
 
-	const downloadLink = document.querySelector<HTMLAnchorElement>("[data-download]");
-	downloadLink?.addEventListener("click", async (event) => {
-		event.preventDefault();
-		const href = downloadLink.getAttribute("href");
-		if (!href) return;
-		const response = await fetch(href);
-		const blob = await response.blob();
-		const url = URL.createObjectURL(blob);
-		const anchor = document.createElement("a");
-		anchor.href = url;
-		anchor.download = downloadLink.getAttribute("download") ?? href.split("/").pop() ?? "story.png";
-		anchor.click();
-		URL.revokeObjectURL(url);
+		const downloadLink = document.querySelector<HTMLAnchorElement>("[data-download]");
+		downloadLink?.addEventListener("click", async (event) => {
+			event.preventDefault();
+			const href = downloadLink.getAttribute("href");
+			if (!href) return;
+			try {
+				const response = await fetch(href);
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				const url = URL.createObjectURL(await response.blob());
+				const anchor = document.createElement("a");
+				anchor.href = url;
+				anchor.download = downloadLink.getAttribute("download") ?? "";
+				document.body.append(anchor);
+				anchor.click();
+				anchor.remove();
+				setTimeout(() => URL.revokeObjectURL(url), 1000);
+			} catch {
+				window.location.href = href;
+			}
+		});
 	});
 </script>
