@@ -223,6 +223,7 @@ export default {
 		eyebrow: "Story",
 		title: "Share Jota in your stories.",
 		body: "A ready-made Instagram image with the app in a nutshell and a real screenshot of the player.",
+		imageBody: "Free, open-source music.\nConnect Spotify, browse YouTube,\nor build your own local library.",
 		download: "Download PNG",
 		share: "Share",
 		instagram: "Share on Instagram",

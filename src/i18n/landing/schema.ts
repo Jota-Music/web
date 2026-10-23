@@ -97,6 +97,7 @@ export interface Landing {
 		eyebrow: string;
 		title: string;
 		body: string;
+		imageBody: string;
 		download: string;
 		share: string;
 		instagram: string;

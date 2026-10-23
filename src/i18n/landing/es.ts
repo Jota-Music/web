@@ -223,6 +223,7 @@ export default {
 		eyebrow: "Historia",
 		title: "Comparte Jota en tus historias.",
 		body: "Una imagen lista para Instagram, con el resumen de la app y la captura real del reproductor.",
+		imageBody: "Música gratis y de código abierto.\nConecta Spotify, explora YouTube\no crea tu propia biblioteca local.",
 		download: "Descargar PNG",
 		share: "Compartir",
 		instagram: "Compartir en Instagram",
