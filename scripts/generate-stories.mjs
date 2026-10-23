@@ -46,12 +46,6 @@ function wrap(ctx, text, max) {
 	return lines;
 }
 
-async function draw(locale) {
-	const landing = JSON.parse(fs.readFileSync(path.join(ROOT, "src", "i18n", "landing", `${locale}.ts`), "utf8").replace(/^export default /, "").replace(/;?\s*$/, ""));
-	// fallback: read as module via dynamic import
-}
-
-// Use dynamic import instead
 async function main() {
 	const [icon, shot] = await Promise.all([
 		loadImage(path.join(PUBLIC, "apple-touch-icon.png")),
@@ -167,7 +161,7 @@ async function main() {
 
 		const boxH = 56;
 		const boxY = y + 84;
-		const text = "LINK AQUÍ";
+		const text = t.stories.imageLink;
 		ctx.font = font(600, 20);
 		const boxW = ctx.measureText(text).width + 24;
 		ctx.setLineDash([12, 10]);

@@ -224,6 +224,7 @@ export default {
 		title: "Share Jota in your stories.",
 		body: "A ready-made Instagram image with the app in a nutshell and a real screenshot of the player.",
 		imageBody: "Open-source music client.\nConnect Spotify, browse YouTube,\nor build your own local library.",
+		imageLink: "LINK HERE",
 		download: "Download PNG",
 		share: "Share",
 		instagram: "Share on Instagram",

@@ -98,6 +98,7 @@ export interface Landing {
 		title: string;
 		body: string;
 		imageBody: string;
+		imageLink: string;
 		download: string;
 		share: string;
 		instagram: string;
