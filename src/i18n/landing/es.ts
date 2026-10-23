@@ -12,6 +12,12 @@ export default {
 		github: "GitHub",
 		download: "Descargar",
 		language: "Idioma",
+		languagePrompt: {
+			title: "Idioma",
+			body: "Este sitio está en {current}. ¿Cambiar a {device}?",
+			switch: "Cambiar",
+			keep: "Mantener",
+		},
 	},
 	hero: {
 		badge: "Streaming de música autoalojado",

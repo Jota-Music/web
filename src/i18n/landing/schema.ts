@@ -43,6 +43,12 @@ export interface Landing {
 		github: string;
 		download: string;
 		language: string;
+		languagePrompt: {
+			title: string;
+			body: string;
+			switch: string;
+			keep: string;
+		};
 	};
 	hero: {
 		badge: string;
