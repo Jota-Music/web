@@ -276,9 +276,7 @@ const { t, locale } = Astro.props;
 		};
 
 		const finish = () => {
-			actions?.classList.add("hidden");
-			hint?.classList.add("hidden");
-			after?.classList.remove("hidden");
+			if (hint && after) hint.textContent = after.textContent ?? hint.textContent;
 		};
 
 		saveButton?.addEventListener("click", async () => {
