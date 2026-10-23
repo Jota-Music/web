@@ -1,7 +1,7 @@
 ---
 import { Copy, Download, Instagram } from "lucide-astro";
 import type { Landing } from "@/i18n/landing/schema";
-import type { Locale } from "@/i18n";
+import { path, type Locale } from "@/i18n";
 
 interface Props {
 	t: Landing;
@@ -12,6 +12,11 @@ interface Props {
 const { t, locale, heading = "h2" } = Astro.props;
 
 const Heading = heading;
+
+const share = new URL(
+	path(locale),
+	Astro.site ?? "https://jota.salvadorsru.com",
+).toString();
 ---
 
 <section id="stories" class="scroll-mt-28 py-16 md:py-24">
@@ -41,11 +46,12 @@ const Heading = heading;
 						<button
 							type="button"
 							data-copy
+							data-copy-url={share}
 							data-copied={t.stories.copied}
 							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-4 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
 						>
 							<Copy size={14} aria-hidden="true" />
-							<span data-copy-label>{t.stories.copy}</span>
+							<span data-copy-label aria-live="polite">{t.stories.copy}</span>
 						</button>
 					</li>
 					<li class="flex flex-wrap items-center gap-3">
