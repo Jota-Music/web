@@ -218,6 +218,7 @@ export default {
 		share: "Compartir",
 		instagram: "Compartir en Instagram",
 		hint: "PNG de 1080 × 1920, sin marca de agua.",
+		instructions: "Abre Instagram, crea una historia y añade la imagen descargada.",
 	},
 	footer: {
 		headline: ["Sin nube.", "Sin rastreo.", "Sin suscripciones."],

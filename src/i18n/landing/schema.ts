@@ -94,6 +94,7 @@ export interface Landing {
 		share: string;
 		instagram: string;
 		hint: string;
+		instructions: string;
 	};
 	footer: {
 		headline: string[];

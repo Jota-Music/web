@@ -1,5 +1,5 @@
 ---
-import { Download, Share2 } from "lucide-astro";
+import { Download } from "lucide-astro";
 import type { Landing } from "@/i18n/landing/schema";
 import type { Locale } from "@/i18n";
 
@@ -21,7 +21,7 @@ const { t, locale } = Astro.props;
 			<p class="mt-4 max-w-xl text-sm leading-relaxed text-balance text-muted">
 				{t.stories.body}
 			</p>
-			<div class="mt-8 flex flex-wrap items-center gap-3">
+			<div class="mt-8 flex flex-wrap items-center gap-3" data-actions>
 				<button
 					type="button"
 					data-download
@@ -31,30 +31,11 @@ const { t, locale } = Astro.props;
 					<Download size={16} aria-hidden="true" />
 					{t.stories.download}
 				</button>
-				<button
-					type="button"
-					data-share
-					disabled
-					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-6 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-surface"
-				>
-					<Share2 size={16} aria-hidden="true" />
-					{t.stories.share}
-				</button>
-				<button
-					type="button"
-					data-instagram
-					disabled
-					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-6 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-surface"
-				>
-					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-						<rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-						<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-						<line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-					</svg>
-					{t.stories.instagram}
-				</button>
 			</div>
-			<p class="mt-4 text-xs text-balance text-dim">{t.stories.hint}</p>
+			<p class="mt-4 text-xs text-balance text-dim" data-hint>{t.stories.hint}</p>
+			<div class="mt-4 hidden rounded-xl border border-zinc-800 bg-surface/50 p-5 text-sm leading-relaxed text-muted" data-after>
+				{t.stories.instructions}
+			</div>
 		</div>
 
 		<div class="min-w-0 md:col-span-6">
@@ -91,7 +72,9 @@ const { t, locale } = Astro.props;
 		const name = `jota-stories-${canvas.dataset.locale ?? "en"}.png`;
 		const section = canvas.closest("section");
 		const saveButton = section?.querySelector<HTMLButtonElement>("[data-download]");
-		const shareButton = section?.querySelector<HTMLButtonElement>("[data-share]");
+		const actions = section?.querySelector<HTMLElement>("[data-actions]");
+		const hint = section?.querySelector<HTMLElement>("[data-hint]");
+		const after = section?.querySelector<HTMLElement>("[data-after]");
 
 		const accent =
 			getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() ||
@@ -292,38 +275,19 @@ const { t, locale } = Astro.props;
 			setTimeout(() => URL.revokeObjectURL(url), 1000);
 		};
 
-		const send = async () => {
-			const data = await blob();
-			const file = data ? new File([data], name, { type: "image/png" }) : null;
-
-			if (file && navigator.canShare?.({ files: [file] })) {
-				try {
-					await navigator.share({ files: [file] });
-				} catch {}
-				return;
-			}
-
-			await save();
+		const finish = () => {
+			actions?.classList.add("hidden");
+			hint?.classList.add("hidden");
+			after?.classList.remove("hidden");
 		};
 
-		const instagramButton = section?.querySelector<HTMLButtonElement>("[data-instagram]");
-
-		saveButton?.addEventListener("click", () => void save());
-		shareButton?.addEventListener("click", () => void send());
-
-		const instagram = async () => {
+		saveButton?.addEventListener("click", async () => {
 			await save();
-			try {
-				window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
-			} catch {}
-		};
-
-		instagramButton?.addEventListener("click", () => void instagram());
+			finish();
+		});
 
 		await draw();
 
 		if (saveButton) saveButton.disabled = false;
-		if (shareButton) shareButton.disabled = false;
-		if (instagramButton) instagramButton.disabled = false;
 	}
 </script>
