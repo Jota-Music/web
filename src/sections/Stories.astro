@@ -31,6 +31,7 @@ const { t, locale } = Astro.props;
 				<ol class="grid gap-3 px-5 py-4 text-sm text-muted sm:px-6">
 					<li class="flex flex-wrap items-center gap-3">
 						<span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent">1</span>
+						<span class="text-ink">{t.stories.step1}</span>
 						<button
 							type="button"
 							data-copy
@@ -43,6 +44,7 @@ const { t, locale } = Astro.props;
 					</li>
 					<li class="flex flex-wrap items-center gap-3">
 						<span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent">2</span>
+						<span class="text-ink">{t.stories.step2}</span>
 						<button
 							type="button"
 							data-download
@@ -55,7 +57,7 @@ const { t, locale } = Astro.props;
 					</li>
 					<li class="flex items-start gap-3">
 						<span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent">3</span>
-						<span>{t.stories.hint}</span>
+						<span class="text-ink">{t.stories.step3}</span>
 					</li>
 				</ol>
 			</div>
