@@ -1,0 +1,36 @@
+---
+import type { Locale } from "@/i18n";
+import { locales, path } from "@/i18n";
+
+interface Props {
+	current: Locale;
+	label: string;
+}
+
+const { current, label } = Astro.props;
+
+const codes: Record<Locale, string> = { en: "EN", es: "ES" };
+---
+
+<div role="group" aria-label={label} class="flex items-center gap-0.5">
+	{
+		locales.map((code) =>
+			code === current ? (
+				<span
+					aria-current="true"
+					class="inline-flex min-h-9 items-center rounded-full bg-ink px-3 text-xs font-semibold text-paper"
+				>
+					{codes[code]}
+				</span>
+			) : (
+				<a
+					href={path(code)}
+					hreflang={code}
+					class="inline-flex min-h-9 items-center rounded-full px-3 text-xs text-muted transition-colors hover:text-ink"
+				>
+					{codes[code]}
+				</a>
+			),
+		)
+	}
+</div>

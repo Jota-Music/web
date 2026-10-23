@@ -1,7 +1,8 @@
 ---
 import { Download, Github } from "lucide-astro";
+import Lang from "@/sections/Lang.astro";
 import type { Landing } from "@/i18n/landing/schema";
-import { locales, match, path, type Locale } from "@/i18n";
+import { match } from "@/i18n";
 
 interface Props {
 	t: Landing;
@@ -10,8 +11,6 @@ interface Props {
 const { t } = Astro.props;
 
 const locale = match(Astro.url.pathname);
-
-const codes: Record<Locale, string> = { en: "EN", es: "ES" };
 
 const links = [
 	{ href: "#features", label: t.nav.features },
@@ -53,54 +52,13 @@ const links = [
 					{t.nav.github}
 				</a>
 			</li>
-			<li role="group" aria-label={t.nav.language} class="flex items-center gap-0.5 pl-1">
-				{
-					locales.map((code) =>
-						code === locale ? (
-							<span
-								aria-current="true"
-								class="rounded-full bg-ink px-2 py-1 text-xs font-semibold text-paper"
-							>
-								{codes[code]}
-							</span>
-						) : (
-							<a
-								href={path(code)}
-								hreflang={code}
-								class="rounded-full px-2 py-1 text-xs text-muted transition-colors hover:text-ink"
-							>
-								{codes[code]}
-							</a>
-						),
-					)
-				}
-			</li>
 		</ul>
-		<div class="ml-auto flex items-center gap-0.5 sm:hidden">
-			{
-				locales.map((code) =>
-					code === locale ? (
-						<span
-							aria-current="true"
-							class="rounded-full bg-ink px-2 py-1 text-xs font-semibold text-paper"
-						>
-							{codes[code]}
-						</span>
-					) : (
-						<a
-							href={path(code)}
-							hreflang={code}
-							class="rounded-full px-2 py-1 text-xs text-muted transition-colors hover:text-ink"
-						>
-							{codes[code]}
-						</a>
-					),
-				)
-			}
+		<div class="ml-auto flex items-center sm:ml-0">
+			<Lang current={locale} label={t.nav.language} />
 		</div>
 		<a
 			href="#download"
-			class="ml-2 inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px sm:ml-2"
+			class="ml-2 inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 		>
 			<Download size={15} aria-hidden="true" />
 			{t.nav.download}
