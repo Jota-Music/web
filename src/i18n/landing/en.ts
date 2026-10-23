@@ -168,7 +168,7 @@ export default {
 			".",
 		],
 		warning: [
-			"The app is not code-signed, but it is safe: Jota is open source, so anyone can review the code. Signing costs money we would rather spend on the app itself.",
+			"The app is not code-signed, but it is safe: Jota is open source, so anyone can review the code. Signing costs money we would rather spend on the app itself. On some devices the system may suggest not installing it — you can ignore that warning.",
 		],
 	},
 	faq: {

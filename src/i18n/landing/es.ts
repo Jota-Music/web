@@ -168,7 +168,7 @@ export default {
 			".",
 		],
 		warning: [
-			"La app no está firmada, pero es segura: Jota es código abierto y cualquiera puede revisarlo. Firmar cuesta dinero que preferimos invertir en la app.",
+			"La app no está firmada, pero es segura: Jota es código abierto y cualquiera puede revisarlo. Firmar cuesta dinero que preferimos invertir en la app. En algunos dispositivos el sistema puede sugerir no instalarla: puedes ignorar ese aviso.",
 		],
 	},
 	faq: {
