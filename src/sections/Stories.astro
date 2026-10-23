@@ -48,15 +48,14 @@ const { t, locale } = Astro.props;
 					<li class="flex flex-wrap items-center gap-3">
 						<span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent">2</span>
 						<span class="text-ink">{t.stories.step2}</span>
-						<button
-							type="button"
-							data-download
-							disabled
-							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+						<a
+							href={`/stories-${locale}.png`}
+							download={`jota-stories-${locale}.png`}
+							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 						>
 							<Download size={14} aria-hidden="true" />
 							{t.stories.download}
-						</button>
+						</a>
 					</li>
 					<li class="flex items-start gap-3">
 						<span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent/15 text-xs font-bold text-accent">3</span>
@@ -67,292 +66,24 @@ const { t, locale } = Astro.props;
 		</div>
 
 		<div class="min-w-0 md:col-span-6">
-			<canvas
-				data-stories
-				data-locale={locale}
-				data-title={t.hero.title}
-				data-body={t.stories.imageBody}
-				data-promises={Object.values(t.hero.promises).join("|")}
-				data-badge={t.stories.free}
+			<img
+				src={`/stories-${locale}.png`}
+				alt={t.stories.title}
 				width="1080"
 				height="1920"
-				role="img"
-				aria-label={t.stories.title}
 				class="mx-auto block h-auto w-full max-w-[320px] rounded-xl border border-zinc-800 bg-paper"
-			>
-			</canvas>
+			/>
 		</div>
 	</div>
 </section>
 
 <script>
-	const SANS = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif';
-	const PAPER = "#09090b";
-	const INK = "#fafafa";
-	const MUTED = "#a1a1aa";
-	const SURFACE = "#18181b";
-	const EDGE = "#27272a";
-
-	async function init() {
-		const canvas = document.querySelector("[data-stories]");
-		if (!(canvas instanceof HTMLCanvasElement)) return;
-		const ctx = canvas.getContext("2d");
-		if (!ctx || canvas.dataset.drawn === "1") return;
-		canvas.dataset.drawn = "1";
-		const { width: W, height: H } = canvas;
-		const name = `jota-stories-${canvas.dataset.locale ?? "en"}.png`;
-		const section = canvas.closest("section");
-		const saveButton = section?.querySelector<HTMLButtonElement>("[data-download]");
-		const copyButton = section?.querySelector<HTMLButtonElement>("[data-copy]");
-		const hint = section?.querySelector<HTMLElement>("[data-hint]");
-
-		const accent =
-			getComputedStyle(document.documentElement).getPropertyValue("--color-accent").trim() ||
-			"#ff6dd6";
-
-		const rgba = (hex: string, alpha: number) => {
-			const n = Number.parseInt(hex.slice(1), 16);
-			return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
-		};
-
-		const font = (weight: number, size: number) => `${weight} ${size}px ${SANS}`;
-
-		const round = (x: number, y: number, w: number, h: number, r: number) => {
-			ctx.beginPath();
-			ctx.roundRect(x, y, w, h, r);
-		};
-
-		const wrap = (text: string, max: number) => {
-			const lines: string[] = [];
-
-			for (const paragraph of text.split("\n")) {
-				let line = "";
-
-				for (const word of paragraph.split(/\s+/).filter(Boolean)) {
-					const next = line ? `${line} ${word}` : word;
-
-					if (line && ctx.measureText(next).width > max) {
-						lines.push(line);
-						line = word;
-					} else {
-						line = next;
-					}
-				}
-
-				if (line) lines.push(line);
-			}
-
-			if (import.meta.env.DEV) {
-				for (const wrapped of lines) {
-					console.assert(ctx.measureText(wrapped).width <= max, "stories: line overflows", wrapped);
-				}
-			}
-
-			return lines;
-		};
-
-		const load = (src: string) =>
-			new Promise<HTMLImageElement | null>((resolve) => {
-				const image = new Image();
-				image.onload = () => resolve(image);
-				image.onerror = () => resolve(null);
-				image.src = src;
-			});
-
-		const draw = async () => {
-			const [icon, shot] = await Promise.all([
-				load("/apple-touch-icon.png"),
-				load("/img/screenshot-home.png"),
-			]);
-
-			await document.fonts.ready;
-
-			const left = 96;
-			const right = W - 96;
-			const max = right - left;
-			const top = 260;
-			const bottom = 1680;
-
-			ctx.fillStyle = PAPER;
-			ctx.fillRect(0, 0, W, H);
-
-			const bloom = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, 1100);
-			bloom.addColorStop(0, rgba(accent, 0.3));
-			bloom.addColorStop(1, rgba(accent, 0));
-			ctx.fillStyle = bloom;
-			ctx.fillRect(0, 0, W, 1100);
-
-			ctx.textAlign = "left";
-			ctx.textBaseline = "top";
-
-			let y = top;
-
-			if (icon) {
-				round(left, y, 112, 112, 28);
-				ctx.save();
-				ctx.clip();
-				ctx.drawImage(icon, left, y, 112, 112);
-				ctx.restore();
-			}
-			y += 164;
-
-			ctx.font = font(700, 120);
-			ctx.fillStyle = INK;
-			ctx.fillText("Jota", left, y);
-			y += 152;
-
-			y += 46;
-
-			ctx.font = font(700, 28);
-			const badgeText = canvas.dataset.badge ?? "Totally free";
-			const badgeW = ctx.measureText(badgeText).width + 32;
-			round(left, y, badgeW, 40, 20);
-			ctx.fillStyle = accent;
-			ctx.fill();
-			ctx.fillStyle = "#09090b";
-			ctx.textAlign = "center";
-			ctx.textBaseline = "middle";
-			ctx.fillText(badgeText, left + badgeW / 2, y + 20);
-			ctx.textAlign = "left";
-			ctx.textBaseline = "top";
-			y += 56;
-
-			ctx.font = font(700, 56);
-			ctx.fillStyle = INK;
-			for (const line of wrap(canvas.dataset.title ?? "", max)) {
-				ctx.fillText(line, left, y);
-				y += 68;
-			}
-			y += 16;
-
-			ctx.font = font(400, 36);
-			ctx.fillStyle = MUTED;
-			for (const line of wrap(canvas.dataset.body ?? "", max)) {
-				ctx.fillText(line, left, y);
-				y += 46;
-			}
-			y += 44;
-
-			ctx.font = font(600, 32);
-			const pill = 68;
-			const gap = 14;
-			const col = (max - gap) / 2;
-			const labels = (canvas.dataset.promises ?? "").split("|");
-			let x = left;
-			let i = 0;
-
-			for (const label of labels) {
-				const width = col;
-
-				if (i > 0 && i % 2 === 0) {
-					x = left;
-					y += pill + gap;
-				}
-
-				round(x, y, width, pill, pill / 2);
-				ctx.fillStyle = SURFACE;
-				ctx.fill();
-				ctx.strokeStyle = EDGE;
-				ctx.lineWidth = 2;
-				ctx.stroke();
-
-				ctx.fillStyle = "#d4d4d8";
-				ctx.textAlign = "center";
-				ctx.textBaseline = "middle";
-				ctx.fillText(label, x + width / 2, y + pill / 2, width - 24);
-				ctx.textAlign = "left";
-				ctx.textBaseline = "top";
-
-				x += width + gap;
-				i += 1;
-			}
-			y += pill + 28;
-
-			ctx.font = font(500, 24);
-			ctx.fillStyle = MUTED;
-			ctx.textAlign = "left";
-			ctx.textBaseline = "middle";
-			ctx.fillText("Linux  ·  Android  ·  Windows  ·  macOS", left, y + 12);
-			ctx.textBaseline = "top";
-
-			ctx.font = font(600, 20);
-			const text = "LINK AQUÍ";
-			const textW = ctx.measureText(text).width;
-			const boxW = textW + 24;
-			const boxH = 56;
-			const boxY = y + 84;
-
-			ctx.setLineDash([12, 10]);
-			ctx.strokeStyle = MUTED;
-			ctx.lineWidth = 2;
-			round(left, boxY, boxW, boxH, 16);
-			ctx.stroke();
-			ctx.setLineDash([]);
-
-			ctx.fillStyle = MUTED;
-			ctx.textAlign = "left";
-			ctx.textBaseline = "middle";
-			ctx.fillText(text, left + 12, boxY + boxH / 2);
-
-			const shotY = boxY + boxH + 72;
-			const height = Math.max(bottom - shotY, 0);
-
-			if (shot) {
-				const crop = (shot.width * height) / max;
-
-				round(left, shotY, max, height, 28);
-				ctx.save();
-				ctx.clip();
-				ctx.drawImage(shot, 0, 0, shot.width, crop, left, shotY, max, height);
-				ctx.restore();
-
-				round(left, shotY, max, height, 28);
-				ctx.strokeStyle = EDGE;
-				ctx.lineWidth = 2;
-				ctx.stroke();
-			}
-		};
-
-		const blob = () => new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
-
-		const save = async () => {
-			const data = await blob();
-			if (!data) return;
-
-			const url = URL.createObjectURL(data);
-			const link = document.createElement("a");
-			link.href = url;
-			link.download = name;
-			link.click();
-			setTimeout(() => URL.revokeObjectURL(url), 1000);
-		};
-
-		copyButton?.addEventListener("click", async () => {
-			try {
-				await navigator.clipboard.writeText(window.location.href);
-				const label = copyButton?.querySelector<HTMLElement>("[data-copy-label]"); if (label) label.textContent = copyButton?.dataset.copied ?? "Copied";
-			} catch {}
-		});
-
-		saveButton?.addEventListener("click", async () => {
-			await save();
-		});
-
-		await draw();
-
-		if (saveButton) saveButton.disabled = false;
-	}
-
-	const schedule = () => {
-		const canvas = document.querySelector("[data-stories]");
-		if (!(canvas instanceof HTMLCanvasElement) || canvas.dataset.drawn === "1") return;
-		void init();
-	};
-
-	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", schedule, { once: true });
-	} else {
-		schedule();
-	}
-	document.addEventListener("astro:page-load", schedule);
+	const copyButton = document.querySelector<HTMLButtonElement>("[data-copy]");
+	copyButton?.addEventListener("click", async () => {
+		try {
+			await navigator.clipboard.writeText(window.location.href);
+			const label = copyButton.querySelector<HTMLElement>("[data-copy-label]");
+			if (label) label.textContent = copyButton.dataset.copied ?? "Copied";
+		} catch {}
+	});
 </script>
