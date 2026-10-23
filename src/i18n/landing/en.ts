@@ -168,7 +168,7 @@ export default {
 			".",
 		],
 		warning: [
-			"Jota is a hobby project by @salvadorsru. The app is not code-signed, but it is safe: Jota is open source, so anyone can review its code. Since the app is completely free and generates no revenue, we prefer to dedicate our resources to improving the app rather than paying for code-signing certificates. On some devices, the system may warn you against installing it — you can safely ignore that warning.",
+			"Jota is a hobby project by @salvadorsru. The app is not code-signed, but it is safe: Jota is open source, so anyone can review its code. Since the app is completely free and generates no revenue, I prefer to dedicate my resources to improving the app rather than paying for code-signing certificates. On some devices, the system may warn you against installing it — you can safely ignore that warning.",
 		],
 	},
 	faq: {
