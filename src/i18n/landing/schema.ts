@@ -96,6 +96,7 @@ export interface Landing {
 		hint: string;
 		instructions: string;
 		intro: string;
+		free: string;
 		step1: string;
 		step2: string;
 		step3: string;

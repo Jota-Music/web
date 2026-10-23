@@ -220,6 +220,7 @@ export default {
 		hint: "1080 × 1920 PNG, no watermark.",
 		instructions: "Share on Instagram",
 		intro: "Enjoyed the app? Share it in a tap with a ready-made story.",
+		free: "Totally free",
 		step1: "Copy the link to your clipboard.",
 		step2: "Download the story image.",
 		step3: "Open Instagram, create a story, add the image and paste the link.",

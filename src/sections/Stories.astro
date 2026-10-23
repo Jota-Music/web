@@ -73,6 +73,7 @@ const { t, locale } = Astro.props;
 				data-title={t.hero.title}
 				data-body={t.hero.body}
 				data-promises={Object.values(t.hero.promises).join("|")}
+				data-badge={t.stories.free}
 				width="1080"
 				height="1920"
 				role="img"
@@ -198,6 +199,20 @@ const { t, locale } = Astro.props;
 			ctx.fillStyle = accent;
 			ctx.fillRect(left, y, 128, 10);
 			y += 46;
+
+			ctx.font = font(700, 28);
+			const badgeText = canvas.dataset.badge ?? "Totally free";
+			const badgeW = ctx.measureText(badgeText).width + 32;
+			round(left, y, badgeW, 40, 20);
+			ctx.fillStyle = accent;
+			ctx.fill();
+			ctx.fillStyle = "#09090b";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle";
+			ctx.fillText(badgeText, left + badgeW / 2, y + 20);
+			ctx.textAlign = "left";
+			ctx.textBaseline = "top";
+			y += 56;
 
 			ctx.font = font(700, 56);
 			ctx.fillStyle = INK;
