@@ -276,7 +276,10 @@ const { t, locale } = Astro.props;
 		};
 
 		const finish = () => {
-			if (hint && after) hint.textContent = after.textContent ?? hint.textContent;
+			if (hint && after) {
+				hint.textContent = after.textContent ?? hint.textContent;
+				hint.className = "mt-4 text-sm font-semibold text-ink";
+			}
 		};
 
 		saveButton?.addEventListener("click", async () => {
