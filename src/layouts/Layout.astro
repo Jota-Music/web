@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Analytics from "@vercel/analytics/astro";
 import { ClientRouter } from "astro:transitions";
-import { landing, locales, match, path, defaultLocale, type Locale } from "@/i18n";
+import { landing, locales, localizedPath, match, defaultLocale, type Locale } from "@/i18n";
 
 const locale = match(Astro.url.pathname);
 const { meta, nav } = await landing(locale);
@@ -11,8 +11,8 @@ const prompt = nav.languagePrompt;
 
 const og: Record<Locale, string> = { en: "en_US", es: "es_ES" };
 const alternates = [
-	...locales.map((code) => ({ hreflang: code, href: path(code) })),
-	{ hreflang: "x-default", href: path(defaultLocale) },
+	...locales.map((code) => ({ hreflang: code, href: localizedPath(Astro.url.pathname, code) })),
+	{ hreflang: "x-default", href: localizedPath(Astro.url.pathname, defaultLocale) },
 ];
 ---
 

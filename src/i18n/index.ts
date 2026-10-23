@@ -23,3 +23,10 @@ export async function landing(locale: Locale): Promise<Landing> {
 export function path(locale: Locale): string {
 	return locale === defaultLocale ? "/" : `/${locale}/`;
 }
+
+export function localizedPath(pathname: string, locale: Locale): string {
+	const parts = pathname.split("/").filter(Boolean);
+	const rest = locales.includes(parts[0] as Locale) ? parts.slice(1) : parts;
+	const base = path(locale);
+	return rest.length ? `${base}${rest.join("/")}/` : base;
+}
