@@ -51,6 +51,7 @@ const { t, locale } = Astro.props;
 						<a
 							href={`/stories-${locale}.png`}
 							download={`jota-stories-${locale}.png`}
+							data-download
 							class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink transition-transform hover:-translate-y-px"
 						>
 							<Download size={14} aria-hidden="true" />
@@ -85,5 +86,20 @@ const { t, locale } = Astro.props;
 			const label = copyButton.querySelector<HTMLElement>("[data-copy-label]");
 			if (label) label.textContent = copyButton.dataset.copied ?? "Copied";
 		} catch {}
+	});
+
+	const downloadLink = document.querySelector<HTMLAnchorElement>("[data-download]");
+	downloadLink?.addEventListener("click", async (event) => {
+		event.preventDefault();
+		const href = downloadLink.getAttribute("href");
+		if (!href) return;
+		const response = await fetch(href);
+		const blob = await response.blob();
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement("a");
+		anchor.href = url;
+		anchor.download = downloadLink.getAttribute("download") ?? href.split("/").pop() ?? "story.png";
+		anchor.click();
+		URL.revokeObjectURL(url);
 	});
 </script>
