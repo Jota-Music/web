@@ -1,14 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import Lang from "@/sections/Lang.astro";
 import Stories from "@/sections/Stories.astro";
-import { landing, match } from "@/i18n";
+import { landing, match, path } from "@/i18n";
 
 const locale = match(Astro.url.pathname);
 const t = await landing(locale);
 ---
 
 <Layout>
+	<header class="flex items-center justify-between px-4 pt-4">
+		<a href={path(locale)} class="flex items-center gap-2 text-sm font-semibold text-ink">
+			<img src="/apple-touch-icon.png" alt="" width="20" height="20" class="rounded-md" />
+			Jota
+		</a>
+		<Lang current={locale} label={t.nav.language} />
+	</header>
 	<main>
-		<Stories t={t} locale={locale} />
+		<Stories t={t} locale={locale} heading="h1" />
 	</main>
 </Layout>
