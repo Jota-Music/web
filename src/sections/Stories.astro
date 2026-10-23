@@ -29,7 +29,7 @@ const { t, locale } = Astro.props;
 					class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface px-6 py-3 text-sm font-semibold text-zinc-200 transition-colors hover:bg-raised"
 				>
 					<Copy size={16} aria-hidden="true" />
-					{t.stories.copy}
+					<span data-copy-label>{t.stories.copy}</span>
 				</button>
 				<button
 					type="button"
@@ -312,7 +312,7 @@ const { t, locale } = Astro.props;
 		copyButton?.addEventListener("click", async () => {
 			try {
 				await navigator.clipboard.writeText(window.location.href);
-				if (copyButton) copyButton.textContent = copyButton.dataset.copied ?? "Copied";
+				const label = copyButton?.querySelector<HTMLElement>("[data-copy-label]"); if (label) label.textContent = copyButton?.dataset.copied ?? "Copied";
 			} catch {}
 		});
 
